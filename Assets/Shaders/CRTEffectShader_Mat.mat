@@ -85,11 +85,11 @@ Material:
     - _maskDark: 1.39
     - _maskLight: 0.81
     - _resScale: 1
-    - hardPix: -3
-    - hardScan: -8.25
-    - maskDark: 0.77
-    - maskLight: 1.07
-    - resScale: 5.7
+    - hardPix: -2.88
+    - hardScan: -8
+    - maskDark: 1.26
+    - maskLight: 1.32
+    - resScale: 4
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
