@@ -17,13 +17,17 @@ public class PickUpScript : MonoBehaviour
 
     //Reference to script which includes mouse movement of player (looking around)
     //we want to disable the player looking around when rotating the object
-    //example below 
     PlayerMovement playerRotation;
+
+    public Inventory inventory;
+    public int inventorySlot = -1;
+
     void Start()
     {
         LayerNumber = LayerMask.NameToLayer("holdLayer"); //if your holdLayer is named differently make sure to change this ""
 
         playerRotation = player.GetComponent<PlayerMovement>();
+
     }
     void Update()
     {
@@ -38,8 +42,19 @@ public class PickUpScript : MonoBehaviour
                     //make sure pickup tag is attached
                     if (hit.transform.gameObject.tag == "canPickUp")
                     {
-                        //pass in object hit into the PickUpObject function
-                        PickUpObject(hit.transform.gameObject);
+                        GameObject pickUpObject = hit.transform.gameObject; // Get the GameObject that was hit
+
+                        // Call the PickUpObject function, which handles the visual aspect of picking up
+                        PickUpObject(pickUpObject);
+                        inventorySlot = -1;
+
+                        // If the GameObject has an ItemPickUp component, call AddToInventory
+                        // This assumes that your inventory logic is handled in the ItemPickUp component
+                        ItemPickUp itemPickUp = pickUpObject.GetComponent<ItemPickUp>();
+                        if (itemPickUp != null)
+                        {
+                            itemPickUp.AddToInventory();
+                        }
                     }
                 }
             }
@@ -62,6 +77,44 @@ public class PickUpScript : MonoBehaviour
                 ThrowObject();
             }
 
+        }
+
+        // Check for number key presses to select items from inventory slots
+        for (int i = 0; i < 5; i++) // Assuming there are 5 slots indexed 0 to 4
+        {
+            if (Input.GetKeyDown((KeyCode)((int)KeyCode.Alpha1 + i)))
+            {
+                if (inventory.slots[i].transform.childCount > 0)
+                {
+                    if(heldObj == null)
+                    {
+                        GameObject prefab = inventory.slots[i].transform.GetChild(0).GetComponent<SpawnItem>().SpawnObject();
+                        GameObject item = Instantiate(prefab);
+                        inventorySlot = i;
+                        PickUpObject(item);
+                    }
+                    else if(inventorySlot == i)
+                    {
+                        GameObject.Destroy(heldObj);
+                    }
+                    else if (inventorySlot == -1)
+                    {
+                        DropObject();
+                        GameObject prefab = inventory.slots[i].transform.GetChild(0).GetComponent<SpawnItem>().SpawnObject();
+                        GameObject item = Instantiate(prefab);
+                        inventorySlot = i;
+                        PickUpObject(item);
+                    }
+                    else
+                    {
+                        GameObject.Destroy(heldObj);
+                        GameObject prefab = inventory.slots[i].transform.GetChild(0).GetComponent<SpawnItem>().SpawnObject();
+                        GameObject item = Instantiate(prefab);
+                        inventorySlot = i;
+                        PickUpObject(item);
+                    }
+                }
+            }
         }
     }
     void PickUpObject(GameObject pickUpObj)
@@ -88,6 +141,10 @@ public class PickUpScript : MonoBehaviour
         heldObjRb.isKinematic = false;
         heldObj.transform.parent = null; //unparent object
         heldObj = null; //undefine game object
+        if (inventorySlot != -1)
+        {
+            inventory.slots[inventorySlot].GetComponent<Slots>().DropItem();
+        }
     }
     void MoveObject()
     {
@@ -128,6 +185,10 @@ public class PickUpScript : MonoBehaviour
         heldObj.transform.parent = null;
         heldObjRb.AddForce(transform.forward * throwForce);
         heldObj = null;
+        if (inventorySlot != -1)
+        {
+            inventory.slots[inventorySlot].GetComponent<Slots>().DropItem();
+        }
     }
     void StopClipping() //function only called when dropping/throwing
     {
