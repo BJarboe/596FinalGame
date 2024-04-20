@@ -10,10 +10,17 @@ public class FlashlightController : MonoBehaviour
     private Light flashlight;
     private AudioSource audioSource;
 
+    //private Vector3 v3Offset;
+    //private GameObject goFollow;
+    //private float speed = 0.5f;
+
     private void Start()
     {
         // Get Light component in the same GameObject
         flashlight = GetComponent<Light>();
+
+        //goFollow = Camera.main.gameObject;
+        //v3Offset = transform.position - goFollow.transform.position;
 
         if (flashlight == null)
         {
@@ -50,6 +57,9 @@ public class FlashlightController : MonoBehaviour
                 {
                     PlayAudioEffect(turnOffSound);
                 }
+
+                //transform.position = goFollow.transform.position + v3Offset;
+                //transform.rotation = Quaternion.Slerp(transform.rotation, goFollow.transform.rotation, speed * Time.deltaTime);
             }
             else
             {
