@@ -2348,17 +2348,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1496336658 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1496336658, guid: 7fb8d29d49356b546849a3033540a420, type: 3}
-  m_PrefabInstance: {fileID: 3538131662818603353}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 489d9a7e106b6a14e8963adbb4f8b958, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1501489011
 GameObject:
   m_ObjectHideFlags: 0
@@ -3695,14 +3684,6 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1496336658, guid: 7fb8d29d49356b546849a3033540a420, type: 3}
-      propertyPath: slots.Array.size
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 1496336658, guid: 7fb8d29d49356b546849a3033540a420, type: 3}
-      propertyPath: isFull.Array.size
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 1496336658, guid: 7fb8d29d49356b546849a3033540a420, type: 3}
       propertyPath: slots.Array.data[0]
       value: 
       objectReference: {fileID: 1501489011}
@@ -3722,14 +3703,6 @@ PrefabInstance:
       propertyPath: slots.Array.data[4]
       value: 
       objectReference: {fileID: 30733668}
-    - target: {fileID: 2026791917, guid: 7fb8d29d49356b546849a3033540a420, type: 3}
-      propertyPath: inventory
-      value: 
-      objectReference: {fileID: 1496336658}
-    - target: {fileID: 3538131662942587342, guid: 7fb8d29d49356b546849a3033540a420, type: 3}
-      propertyPath: m_Layer
-      value: 3
-      objectReference: {fileID: 0}
     - target: {fileID: 5240092819847202616, guid: 7fb8d29d49356b546849a3033540a420, type: 3}
       propertyPath: m_RootOrder
       value: 3
