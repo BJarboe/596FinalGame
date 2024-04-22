@@ -1,9 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using Gameplay;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class EnemyBehavior : MonoBehaviour
+public class EnemyBehavior : MonoBehaviour, IHear
 {
     private Animator anim;
     [SerializeField] private NavMeshAgent agent;
@@ -13,7 +14,8 @@ public class EnemyBehavior : MonoBehaviour
     [SerializeField] private float health;
     private bool isDead = false;
 
-
+    //Sound Response
+    public bool isRespondingToSound = false;
     //Patrolling
     [SerializeField] private Vector3 walkpoint;
     [SerializeField] private bool walkPointSet;
@@ -55,17 +57,20 @@ public class EnemyBehavior : MonoBehaviour
 
         if (isDead == false)
         {
-            if (!playerInSightRange && !playerInAttackRange)
+            if (isRespondingToSound == false)
             {
-                Patrolling();
-            }
-            if (playerInSightRange && !playerInAttackRange)
-            {
-                ChasePlayer();
-            }
-            if (playerInSightRange && playerInAttackRange)
-            {
-                AttackPlayer();
+                if (!playerInSightRange && !playerInAttackRange)
+                {
+                    Patrolling();
+                }
+                if (playerInSightRange && !playerInAttackRange)
+                {
+                    ChasePlayer();
+                }
+                if (playerInSightRange && playerInAttackRange)
+                {
+                    AttackPlayer();
+                }
             }
         }
         else
@@ -152,6 +157,19 @@ public class EnemyBehavior : MonoBehaviour
             alreadyAttacked = true;
             Invoke(nameof(ResetAttack), timeBetweenAttacks);
         }
+    }
+
+    public void RespondToSound(Sound sound)
+    {
+        //set animation to surprised
+
+        //go to item
+        agent.SetDestination(sound.pos);
+    }
+
+    public void SetIsRespondingToSound(bool isRespondingToSound)
+    {
+        this.isRespondingToSound = isRespondingToSound;
     }
 
     private void ResetAttack()
