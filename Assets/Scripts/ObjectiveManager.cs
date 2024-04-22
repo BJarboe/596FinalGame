@@ -46,14 +46,15 @@ public class ObjectiveManager : MonoBehaviour
 
         if (obj == null || obj.status != Objective.Status.Inactive) return false;
 
-        foreach (Objective o in objectives)
+        // ctrl-shft-/ to uncomment:    enables objective lock system
+        /*foreach (Objective o in objectives)
         {
             if (o.status == Objective.Status.Active)
             {
                 Debug.Log($"Tried to start {id} but {obj} is active..");
                 return false;
             }
-        }
+        }*/
 
         obj.status = Objective.Status.Active;
         Debug.Log($"Activated {obj.id}: {obj.description}");
