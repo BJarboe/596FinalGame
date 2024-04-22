@@ -6,12 +6,13 @@ public class TestObj : MonoBehaviour
 {
     public ObjectiveManager objManager;
     public float duration;
+    public string testID;
 
     // Floating animation
     private Vector3 startPos;
-    public float a = 0.5f;
-    public float f = 1f;
-    public float r = 50f;
+    private float a = 0.5f;
+    private float f = 1f;
+    private float r = 50f;
     private void Start()
     {
         startPos = transform.position;
@@ -34,14 +35,14 @@ public class TestObj : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             Debug.Log("Collided with Player");
-            objManager.StartObjective("Test");
-            StartCoroutine(Timer());
+            if (objManager.StartObjective(testID))
+                StartCoroutine(Timer());
         }
     }
 
     IEnumerator Timer()
     {
         yield return new WaitForSeconds(duration);
-        objManager.CompleteObjective("Test");
+        objManager.CompleteObjective(testID);
     }
 }
