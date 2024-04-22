@@ -40,14 +40,25 @@ public class ObjectiveManager : MonoBehaviour
     } // allows other scripts to call functions without messing with memory
 
 
-    public void StartObjective(string id)
+    public bool StartObjective(string id)
     {
         Objective obj = objectives.Find(o => o.id == id); // search for object with corresponding id
 
-        if (obj != null && obj.status != Objective.Status.Inactive) return;
-        
+        if (obj == null || obj.status != Objective.Status.Inactive) return false;
+
+        // ctrl-shft-/ to uncomment:    enables objective lock system
+        /*foreach (Objective o in objectives)
+        {
+            if (o.status == Objective.Status.Active)
+            {
+                Debug.Log($"Tried to start {id} but {obj} is active..");
+                return false;
+            }
+        }*/
+
         obj.status = Objective.Status.Active;
         Debug.Log($"Activated {obj.id}: {obj.description}");
+        return true;
     }
 
     public void CompleteObjective(string id)
