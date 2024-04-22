@@ -210,6 +210,8 @@ MonoBehaviour:
   holdPos: {fileID: 1011382327}
   throwForce: 1000
   pickUpRange: 5
+  inventory: {fileID: 1496336658}
+  inventorySlot: -1
 --- !u!1 &3538131662893679688
 GameObject:
   m_ObjectHideFlags: 0
@@ -322,7 +324,7 @@ GameObject:
   - component: {fileID: 3538131662942587331}
   - component: {fileID: 3538131662942587328}
   - component: {fileID: 1496336658}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -464,8 +466,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 489d9a7e106b6a14e8963adbb4f8b958, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isFull: 00
+  isFull: 0000000000
   slots:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   - {fileID: 0}
 --- !u!1 &3538131663049627313
 GameObject:
