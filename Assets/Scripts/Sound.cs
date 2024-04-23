@@ -8,15 +8,15 @@ namespace Gameplay
     {
         public enum SoundType { Default = 0 }
 
-        public Sound(Vector3 _pos, float _range, SoundType _type = SoundType.Default)
-        {
-            soundType = _type;
-            pos = _pos;
-            range = _range;
-        }
+        public SoundType soundType;
+        public Vector3 pos;
+        public float range;
 
-        public readonly SoundType soundType;
-        public readonly Vector3 pos;
-        public readonly float range;
+        public Sound(Vector3 pos, float range, SoundType type = SoundType.Default)
+        {
+            this.soundType = type;
+            this.pos = pos;
+            this.range = range;
+        }
     }
 }

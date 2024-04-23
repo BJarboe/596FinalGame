@@ -3,92 +3,109 @@ using System.Collections.Generic;
 using Gameplay;
 using UnityEngine;
 
-public class ThrowableItem : MonoBehaviour
+namespace Gameplay
 {
-    public Transform player;
-    public Transform playerCam;
-    public float throwForce = 10;
-    bool hasPlayer = false;
-    bool beingCarried = false;
-    public AudioClip[] soundToPLay;
-    private AudioSource aud;
-    private float soundRange = 25f;
-    private Sound.SoundType soundType = Sound.SoundType.Default;
-    private bool touched = false;
-
-    // Start is called before the first frame update
-    void Start()
+    public class ThrowableItem : MonoBehaviour
     {
-        aud = GetComponent<AudioSource>();
-    }
+        public Transform player;
+        public Transform playerCam;
+        public LayerMask enemyLayer;
+        public float throwForce = 10;
+        bool hasPlayer = false;
+        bool beingCarried = false;
+        public AudioClip[] soundToPlay;
+        private AudioSource aud;
+        private float soundRange = 25f;
+        private Sound.SoundType soundType = Sound.SoundType.Default;
+        private bool touched = false;
+        private bool isbeingThrown = false;
 
-    // Update is called once per frame
-    void Update()
-    {
-        float dist = Vector3.Distance(gameObject.transform.position, player.position);
-        if(dist <= 5f)
-        {
-            hasPlayer = true;
-        }
-        else
-        {
-            hasPlayer= false;
-        }
 
-        if(hasPlayer && Input.GetButtonDown("Use")) 
+        // Start is called before the first frame update
+        void Start()
         {
-            GetComponent<Rigidbody>().isKinematic = true;
-            transform.parent = playerCam;
-            beingCarried=true;
+            aud = GetComponent<AudioSource>();
         }
 
-        if(beingCarried)
+        // Update is called once per frame
+        void Update()
         {
-            if(touched)
+            float dist = Vector3.Distance(gameObject.transform.position, player.position);
+            if (dist <= 5f)
             {
-                GetComponent<Rigidbody>().isKinematic = false;
-                transform.parent = null;
-                beingCarried = false;
-                touched = false;
+                hasPlayer = true;
+            }
+            else
+            {
+                hasPlayer = false;
             }
 
-            if(Input.GetMouseButtonDown(0))
+            if (hasPlayer && Input.GetButtonDown("Use"))
             {
-                GetComponent<Rigidbody>().isKinematic = false;
-                transform.parent = null;
-                beingCarried = false;
-                GetComponent<Rigidbody>().AddForce(playerCam.forward * throwForce);
+                GetComponent<Rigidbody>().isKinematic = true;
+                transform.parent = playerCam;
+                beingCarried = true;
+            }
+
+            if (beingCarried)
+            {
+                if (touched)
+                {
+                    GetComponent<Rigidbody>().isKinematic = false;
+                    transform.parent = null;
+                    beingCarried = false;
+                    touched = false;
+                }
+
+                if (Input.GetMouseButtonDown(0))
+                {
+                    GetComponent<Rigidbody>().isKinematic = false;
+                    transform.parent = null;
+                    beingCarried = false;
+                    GetComponent<Rigidbody>().AddForce(playerCam.forward * throwForce);
+                    isbeingThrown = true;
+                    //RandomAudio();
+                }
+                else if (Input.GetMouseButtonDown(1))
+                {
+                    GetComponent<Rigidbody>().isKinematic = false;
+                    transform.parent = null;
+                    beingCarried = false;
+                }
+            }
+        }
+
+        void RandomAudio()
+        {
+            if (aud.isPlaying)
+            {
+                return;
+            }
+
+            aud.clip = soundToPlay[Random.Range(0, soundToPlay.Length)];
+            aud.Play();
+
+            var sound = new Sound(transform.position, soundRange, soundType);
+
+            Sounds.MakeSound(sound);
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+
+            if (isbeingThrown && other.gameObject.tag == "Ground")
+            {
                 RandomAudio();
             }
-            else if(Input.GetMouseButtonDown(1))
+
+            isbeingThrown = false;
+
+            if (beingCarried && other.gameObject.tag == "Environment")
             {
-                GetComponent<Rigidbody>().isKinematic = false;
-                transform.parent = null;
-                beingCarried = false;
+                touched = true;
             }
         }
+
     }
 
-    void RandomAudio()
-    {
-        if (aud.isPlaying)
-        {
-            return;
-        }
-
-        aud.clip = soundToPLay[Random.Range(0, soundToPLay.Length)];
-        aud.Play();
-
-        var sound = new Sound(transform.position, soundRange, soundType);
-
-        Sounds.MakeSound(sound);
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if(beingCarried)
-        {
-            touched = true;
-        }
-    }
 }

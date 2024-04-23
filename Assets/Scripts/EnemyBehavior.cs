@@ -13,9 +13,10 @@ public class EnemyBehavior : MonoBehaviour, IHear
 
     [SerializeField] private float health;
     private bool isDead = false;
+    private Vector3 soundWalkpoint;
 
     //Sound Response
-    public bool isRespondingToSound = false;
+    private bool isRespondingToSound = false;
     //Patrolling
     [SerializeField] private Vector3 walkpoint;
     [SerializeField] private bool walkPointSet;
@@ -55,6 +56,8 @@ public class EnemyBehavior : MonoBehaviour, IHear
         playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
         playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
 
+        CheckSoundResponse();
+
         if (isDead == false)
         {
             if (isRespondingToSound == false)
@@ -80,6 +83,7 @@ public class EnemyBehavior : MonoBehaviour, IHear
             dir.y = 0.0f;
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dir), rotationSpeed * Time.deltaTime);
         }
+        
     }
 
     public void Patrolling()
@@ -161,15 +165,29 @@ public class EnemyBehavior : MonoBehaviour, IHear
 
     public void RespondToSound(Sound sound)
     {
+        Debug.Log("Respond to sound called");
         //set animation to surprised
 
+        //save walkpoint
+        soundWalkpoint = sound.pos;
         //go to item
         agent.SetDestination(sound.pos);
+        agent.isStopped = false;
     }
 
     public void SetIsRespondingToSound(bool isRespondingToSound)
     {
         this.isRespondingToSound = isRespondingToSound;
+    }
+
+    public void CheckSoundResponse()
+    {
+        Vector3 distanceToSoundWalkPoint = transform.position - soundWalkpoint;
+
+        if (distanceToSoundWalkPoint.magnitude < 1f)
+        {
+            isRespondingToSound = false;
+        }
     }
 
     private void ResetAttack()
