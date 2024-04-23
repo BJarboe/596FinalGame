@@ -170,6 +170,7 @@ public class EnemyBehavior : MonoBehaviour, IHear
 
         //save walkpoint
         soundWalkpoint = sound.pos;
+
         //go to item
         agent.SetDestination(sound.pos);
         agent.isStopped = false;
