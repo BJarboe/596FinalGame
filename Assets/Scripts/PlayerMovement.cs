@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -17,8 +18,8 @@ public class PlayerMovement : MonoBehaviour
     private float sensMultiplier = 1f;
 
     //Movement
-    public float moveSpeed = 4500;
-    public float maxSpeed = 20;
+    public float walkSpeed = 1000;
+    public float walkMaxSpeed = 10;
     public bool grounded;
     public LayerMask whatIsGround;
 
@@ -39,7 +40,7 @@ public class PlayerMovement : MonoBehaviour
 
     //Input
     float x, y;
-    bool jumping, sprinting, crouching;
+    bool jumping, crouching;
 
     //Sliding
     private Vector3 normalVector = Vector3.up;
@@ -47,6 +48,19 @@ public class PlayerMovement : MonoBehaviour
 
     //Prevent Looking
     public bool canLook = true;
+
+    //Sprinting
+    public float sprintSpeed = 4500;  // Sprinting speed
+    private bool isSprinting = false;
+    public float sprintMaxSpeed = 20;
+    public float stamina = 100f;     // Max stamina
+    public float currentStamina;    // Current stamina
+    public float staminaDrain = 20f; // Stamina drain per second while sprinting
+    public float staminaRecovery = 10f; // Stamina recovery per second
+    public float recoveryDelay = 2f; // Delay before stamina recovery starts after sprinting
+    private float recoveryTimer = 0;
+    public GameObject staminaObject;
+    public Image StaminaBar;
 
     void Awake()
     {
@@ -58,6 +72,7 @@ public class PlayerMovement : MonoBehaviour
         playerScale = transform.localScale;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+        currentStamina = stamina;
     }
 
 
@@ -73,6 +88,43 @@ public class PlayerMovement : MonoBehaviour
         {
             Look();
         }
+
+        // player can continue to sprint until stamina is out, then must recharge
+        if (isSprinting)
+        {
+            if (currentStamina > 0)
+            {
+                currentStamina -= staminaDrain * Time.deltaTime;
+                recoveryTimer = 0;
+            }
+            else
+            {
+                isSprinting = false;
+                currentStamina = 0;
+            }
+        }
+        else
+        {
+            if (recoveryTimer > recoveryDelay)
+            {
+                currentStamina = Mathf.Min(stamina, currentStamina + staminaRecovery * Time.deltaTime);
+            }
+            else
+            {
+                recoveryTimer += Time.deltaTime;
+            }
+        }
+        
+        // Used to display the stamina bar when the player is sprinting
+        if(currentStamina < stamina)
+        {
+            staminaObject.SetActive(true);
+            StaminaBar.fillAmount = currentStamina / stamina;
+        }
+        else
+        {
+            staminaObject.SetActive(false);
+        }
     }
 
     /// <summary>
@@ -84,6 +136,8 @@ public class PlayerMovement : MonoBehaviour
         y = Input.GetAxisRaw("Vertical");
         jumping = Input.GetButton("Jump");
         crouching = Input.GetKey(KeyCode.LeftControl);
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+            isSprinting = !isSprinting;
 
         //Crouching
         if (Input.GetKeyDown(KeyCode.LeftControl))
@@ -127,7 +181,7 @@ public class PlayerMovement : MonoBehaviour
         if (readyToJump && jumping) Jump();
 
         //Set max speed
-        float maxSpeed = this.maxSpeed;
+        float maxSpeed = (isSprinting) ? sprintMaxSpeed : walkMaxSpeed;
 
         //If sliding down a ramp, add force down so player stays grounded and also builds speed
         if (crouching && grounded && readyToJump)
@@ -155,9 +209,18 @@ public class PlayerMovement : MonoBehaviour
         // Movement while sliding
         if (grounded && crouching) multiplierV = 0f;
 
-        //Apply forces to move player
-        rb.AddForce(orientation.transform.forward * y * moveSpeed * Time.deltaTime * multiplier * multiplierV);
-        rb.AddForce(orientation.transform.right * x * moveSpeed * Time.deltaTime * multiplier);
+        if (isSprinting)
+        {
+            //Apply forces to move player
+            rb.AddForce(orientation.transform.forward * y * sprintSpeed * Time.deltaTime * multiplier * multiplierV);
+            rb.AddForce(orientation.transform.right * x * sprintSpeed * Time.deltaTime * multiplier);
+        }
+        else
+        {
+            //Apply forces to move player
+            rb.AddForce(orientation.transform.forward * y * walkSpeed * multiplier * multiplierV);
+            rb.AddForce(orientation.transform.right * x * walkSpeed * multiplier);
+        }
     }
 
     private void Jump()
@@ -209,21 +272,24 @@ public class PlayerMovement : MonoBehaviour
     {
         if (!grounded || jumping) return;
 
+        //Set max speed
+        float maxSpeed = (isSprinting) ? sprintMaxSpeed : walkMaxSpeed;
+
         //Slow down sliding
         if (crouching)
         {
-            rb.AddForce(moveSpeed * Time.deltaTime * -rb.velocity.normalized * slideCounterMovement);
+            rb.AddForce(sprintSpeed * Time.deltaTime * -rb.velocity.normalized * slideCounterMovement);
             return;
         }
 
         //Counter movement
         if (Math.Abs(mag.x) > threshold && Math.Abs(x) < 0.05f || (mag.x < -threshold && x > 0) || (mag.x > threshold && x < 0))
         {
-            rb.AddForce(moveSpeed * orientation.transform.right * Time.deltaTime * -mag.x * counterMovement);
+            rb.AddForce(sprintSpeed * orientation.transform.right * Time.deltaTime * -mag.x * counterMovement);
         }
         if (Math.Abs(mag.y) > threshold && Math.Abs(y) < 0.05f || (mag.y < -threshold && y > 0) || (mag.y > threshold && y < 0))
         {
-            rb.AddForce(moveSpeed * orientation.transform.forward * Time.deltaTime * -mag.y * counterMovement);
+            rb.AddForce(sprintSpeed * orientation.transform.forward * Time.deltaTime * -mag.y * counterMovement);
         }
 
         //Limit diagonal running. This will also cause a full stop if sliding fast and un-crouching, so not optimal.
