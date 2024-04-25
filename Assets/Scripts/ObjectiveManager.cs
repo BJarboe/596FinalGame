@@ -39,10 +39,15 @@ public class ObjectiveManager : MonoBehaviour
             Destroy(gameObject);
     } // allows other scripts to call functions without messing with memory
 
+    public Objective GetObjective(string name)
+    {
+        return objectives.Find(o => o.id == name);
+    }
+
 
     public bool StartObjective(string id)
     {
-        Objective obj = objectives.Find(o => o.id == id); // search for object with corresponding id
+        Objective obj = GetObjective(id); // search for object with corresponding id
 
         if (obj == null || obj.status != Objective.Status.Inactive) return false;
 

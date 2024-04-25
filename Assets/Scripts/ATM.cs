@@ -64,7 +64,7 @@ public class ATM : MonoBehaviour
     {
         float elapsedTime = 0;
         Vector3 startPos = rb.position;
-        Vector3 endPos = startPos + cash.transform.right * 1f;
+        Vector3 endPos = startPos + cash.transform.right * 0.7f;
 
         while (elapsedTime < 2f)
         {
