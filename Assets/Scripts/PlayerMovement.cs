@@ -167,6 +167,11 @@ public class PlayerMovement : MonoBehaviour
 
     private void Movement()
     {
+        // Disable sprinting if the player is not moving
+        if((x == 0 && y == 0) && isSprinting)
+        {
+            isSprinting = false;
+        }
         //Extra gravity
         rb.AddForce(Vector3.down * Time.deltaTime * 10);
 
