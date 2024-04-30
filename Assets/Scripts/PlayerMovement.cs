@@ -32,6 +32,10 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 playerScale;
     public float slideForce = 400;
     public float slideCounterMovement = 0.2f;
+    public float crouchSpeed = 500;
+    public float crouchMaxSpeed = 5;
+    public Transform top;   // prevents the player from standing up if crouched underneath an object.
+    private bool attemptingToStand = false;
 
     //Jumping
     private bool readyToJump = true;
@@ -40,7 +44,7 @@ public class PlayerMovement : MonoBehaviour
 
     //Input
     float x, y;
-    bool jumping, crouching;
+    bool jumping, crouching, sliding;
 
     //Sliding
     private Vector3 normalVector = Vector3.up;
@@ -135,25 +139,29 @@ public class PlayerMovement : MonoBehaviour
         x = Input.GetAxisRaw("Horizontal");
         y = Input.GetAxisRaw("Vertical");
         jumping = Input.GetButton("Jump");
-        crouching = Input.GetKey(KeyCode.LeftControl);
         if (Input.GetKeyDown(KeyCode.LeftShift))
             isSprinting = !isSprinting;
 
         //Crouching
         if (Input.GetKeyDown(KeyCode.LeftControl))
+        {
             StartCrouch();
-        if (Input.GetKeyUp(KeyCode.LeftControl))
+        }
+            
+        if (Input.GetKeyUp(KeyCode.LeftControl) || attemptingToStand)
             StopCrouch();
     }
 
     private void StartCrouch()
     {
+        crouching = true;
         transform.localScale = crouchScale;
         transform.position = new Vector3(transform.position.x, transform.position.y - 0.5f, transform.position.z);
         if (rb.velocity.magnitude > 0.5f)
         {
             if (grounded)
             {
+                sliding = true;
                 rb.AddForce(orientation.transform.forward * slideForce);
             }
         }
@@ -161,14 +169,24 @@ public class PlayerMovement : MonoBehaviour
 
     private void StopCrouch()
     {
-        transform.localScale = playerScale;
-        transform.position = new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z);
+        // check if there is space to stand up before un-crouching
+        if (CanStandUp())
+        {
+            attemptingToStand = false;
+            transform.localScale = playerScale;
+            transform.position = new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z);
+            crouching = false;
+        }
+        else
+        {
+            attemptingToStand = true;
+        }
     }
 
     private void Movement()
     {
-        // Disable sprinting if the player is not moving
-        if((x == 0 && y == 0) && isSprinting)
+        // Disable sprinting if the player is not moving or is crouched
+        if(((x == 0 && y == 0) && isSprinting) || crouching)
         {
             isSprinting = false;
         }
@@ -188,8 +206,14 @@ public class PlayerMovement : MonoBehaviour
         //Set max speed
         float maxSpeed = (isSprinting) ? sprintMaxSpeed : walkMaxSpeed;
 
+        // Adjust the maximum speed further if crouching
+        if (crouching)
+        {
+            maxSpeed = crouchMaxSpeed;  // Apply the crouched max speed
+        }
+
         //If sliding down a ramp, add force down so player stays grounded and also builds speed
-        if (crouching && grounded && readyToJump)
+        if (sliding && grounded && readyToJump)
         {
             rb.AddForce(Vector3.down * Time.deltaTime * 3000);
             return;
@@ -212,13 +236,19 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // Movement while sliding
-        if (grounded && crouching) multiplierV = 0f;
+        if (grounded && sliding) multiplierV = 0f;
 
         if (isSprinting)
         {
             //Apply forces to move player
             rb.AddForce(orientation.transform.forward * y * sprintSpeed * Time.deltaTime * multiplier * multiplierV);
             rb.AddForce(orientation.transform.right * x * sprintSpeed * Time.deltaTime * multiplier);
+        }
+        else if (crouching)
+        {
+            //Apply forces to move player
+            rb.AddForce(orientation.transform.forward * y * crouchSpeed * multiplier * multiplierV);
+            rb.AddForce(orientation.transform.right * x * crouchSpeed * multiplier);
         }
         else
         {
@@ -281,9 +311,10 @@ public class PlayerMovement : MonoBehaviour
         float maxSpeed = (isSprinting) ? sprintMaxSpeed : walkMaxSpeed;
 
         //Slow down sliding
-        if (crouching)
+        if (sliding)
         {
             rb.AddForce(sprintSpeed * Time.deltaTime * -rb.velocity.normalized * slideCounterMovement);
+            if (rb.velocity.magnitude < 0.5f) sliding = false;
             return;
         }
 
@@ -371,4 +402,21 @@ public class PlayerMovement : MonoBehaviour
         grounded = false;
     }
 
+    // Checks if player can stand up without interference
+    private bool CanStandUp()
+    {
+        float distanceToCheck = 2f;  // The distance to check for clearance
+        RaycastHit hit;
+
+        // Below line is used for debugging
+        // Debug.DrawRay(top.position, Vector3.up * distanceToCheck, Color.red);
+
+        // Cast a ray upwards from the "Top" GameObject
+        if (Physics.Raycast(top.position, Vector3.up, out hit, distanceToCheck))
+        {
+            return false;  // There is something directly above within the distance
+        }
+
+        return true;  // Nothing is above, player can stand up
+    }
 }
