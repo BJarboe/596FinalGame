@@ -43,7 +43,7 @@ public class Laundro2 : MonoBehaviour
         startedCycle = false;
         activateMarker = false;
         primeAudio = true;
-        dryerSounds.time = 2;
+        dryerSounds.time = 4;
         alarm.time = 9;
     }
 

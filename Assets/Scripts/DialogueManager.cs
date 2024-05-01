@@ -66,7 +66,7 @@ public class DialogueManager : MonoBehaviour
     {
         checkF = false;
         checkMove = false;
-        (player.GetComponent(movementScript) as MonoBehaviour).enabled = false;
+        (player.GetComponent(movementScript) as MonoBehaviour).enabled = false; ////
 
         sceneNum = 0;
         
@@ -77,7 +77,7 @@ public class DialogueManager : MonoBehaviour
         Click.text = "";
         Instructions.text = "";
 
-        StartCoroutine("phoneDial");
+        StartCoroutine("phoneDial"); ////
     }
 
     void Update()
