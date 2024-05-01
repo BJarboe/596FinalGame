@@ -9,6 +9,8 @@ public class DialogueManager : MonoBehaviour
     public string movementScript;
 
     private bool GUIActive;
+    private bool checkMove;
+    private bool checkF;
     private int sceneNum;
 
     public GameObject BoxName;
@@ -16,6 +18,7 @@ public class DialogueManager : MonoBehaviour
     public TMPro.TextMeshProUGUI Name;
     public TMPro.TextMeshProUGUI Text;
     public TMPro.TextMeshProUGUI Click;
+    public TMPro.TextMeshProUGUI Instructions;
 
     public AudioSource phoneRing;
     public AudioSource aud1a;
@@ -46,18 +49,20 @@ public class DialogueManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        checkF = false;
+        checkMove = false;
         (player.GetComponent(movementScript) as MonoBehaviour).enabled = false;
 
         sceneNum = 0;
         
-        GUIActive = true;
         BoxName.SetActive(false);
         BoxText.SetActive(false);
         Name.text = "";
         Text.text = "";
         Click.text = "";
+        Instructions.text = "";
 
-        StartCoroutine("Scene1a");
+        StartCoroutine("phoneDial");
     }
 
     void Update()
@@ -89,25 +94,36 @@ public class DialogueManager : MonoBehaviour
                     StartCoroutine("Scene1h");
                     break;
                 case 8:
-                    phoneDisconn.Play();
-                    BoxName.SetActive(false);
-                    BoxText.SetActive(false);
-                    Name.text = "";
-                    Text.text = "";
-                    Click.text = "";
-                    GUIActive = false;
                     (player.GetComponent(movementScript) as MonoBehaviour).enabled = true;
-                    sceneNum = 0;
+                    GUIActive = false;
+                    StartCoroutine("Scene2");
                     break;
             }
         }
+        if (checkMove == false & Input.GetKeyDown(KeyCode.W) & sceneNum == 8)
+        {
+            Instructions.text = "";
+            checkMove = true;
+        }
+
+        if (checkF == false & Input.GetKeyDown(KeyCode.F) & sceneNum == 8)
+        {
+            Instructions.text = "";
+            checkF = true;
+        }
+    }
+
+    IEnumerator phoneDial()
+    {
+        phoneRing.Play();
+        yield return new WaitForSeconds(4f);
+        GUIActive = true;
+
+        StartCoroutine("Scene1a");
     }
 
     IEnumerator Scene1a()
     {
-        phoneRing.Play();
-        yield return new WaitForSeconds(3f);
-
         BoxName.SetActive(true);
         BoxText.SetActive(true);
 
@@ -120,6 +136,7 @@ public class DialogueManager : MonoBehaviour
 
     IEnumerator Scene1b()
     {
+        phoneRing.Stop();
         aud1a.Stop(); 
         Name.text = "MEG";
         Text.text = "Wait, I thought I told you. I can't tonight. I'm at my sister's right now to look \nafter her kids.";
@@ -179,6 +196,29 @@ public class DialogueManager : MonoBehaviour
         Text.text = "Love you. See you later.";
         aud1h.Play();
         yield break;
+    }
+
+    IEnumerator Scene2()
+    {
+        aud1h.Stop();
+        phoneDisconn.Play();
+        Instructions.text = "PRESS WASD TO MOVE AND SHIFT TO SPRINT";
+        Name.text = "JUNIA";
+        Text.text = "I'm off work now, but I still have things to do. Let's look at the list.";
+        Click.text = "";
+        aud2a.Play();
+        yield return new WaitForSeconds(6f);
+        Text.text = "Alright. So I need to go to the laundromat, get groceries, drop off mail, and \nget some cash from the ATM.";
+        aud2b.Play();
+        yield return new WaitForSeconds(9.6f);
+        Text.text = "Damn, it's so dark out. Where's my phone?";
+        aud2c.Play(); 
+        yield return new WaitForSeconds(5.7f);
+        BoxName.SetActive(false);
+        BoxText.SetActive(false);
+        Name.text = "";
+        Text.text = "";
+        Instructions.text = "PRESS F TO TURN ON FLASHLIGHT";
     }
 
 }
