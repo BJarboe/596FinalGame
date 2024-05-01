@@ -22,6 +22,9 @@ public class Laundro2 : MonoBehaviour
     private AudioSource dryerSounds;
 
     [SerializeField]
+    private AudioSource alarm;
+
+    [SerializeField]
     private float waitDuration;
 
     private bool playerInRange;
@@ -40,6 +43,8 @@ public class Laundro2 : MonoBehaviour
         startedCycle = false;
         activateMarker = false;
         primeAudio = true;
+        dryerSounds.time = 2;
+        alarm.time = 9;
     }
 
     private void Update()
@@ -57,15 +62,17 @@ public class Laundro2 : MonoBehaviour
     {
         Debug.Log("Starting Second Cycle");
         indicator.GetComponent<Renderer>().material = on_mat;
-        dryerSounds.Play(20);
+        dryerSounds.Play();
         startedCycle = true;
         yield return new WaitForSeconds(waitDuration);
         dryerSounds.Stop();
+        alarm.Play();
         Debug.Log("Second Cycle finished");
         indicator.GetComponent<Renderer>().material = done_mat;
         primeAudio = false;
         yield return new WaitUntil(() => playerInRange && Input.GetKeyDown(KeyCode.E));
         om.CompleteObjective("Laundromat");
+        alarm.Stop();
         dryerSounds.Stop();
         indicator.GetComponent<Renderer>().material = off_mat;
         activateMarker = false;
