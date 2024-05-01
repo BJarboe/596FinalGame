@@ -19,6 +19,8 @@ public class Laundromat : MonoBehaviour
 
     [SerializeField]
     private AudioSource washerSounds;
+    [SerializeField]
+    private AudioSource alarm;
 
     [SerializeField]
     private float waitDuration;
@@ -35,6 +37,7 @@ public class Laundromat : MonoBehaviour
         obj = om.GetObjective("Laundromat");
         indicator.GetComponent<Renderer>().material = off_mat;
         washerSounds.loop = true;
+        alarm.time = 9;
     }
     private void Update()
     {
@@ -63,12 +66,14 @@ public class Laundromat : MonoBehaviour
     {
         indicator.GetComponent<Renderer>().material = on_mat;
         om.StartObjective("Laundromat");
-        washerSounds.Play(20);
+        washerSounds.Play();
         yield return new WaitForSeconds(waitDuration);
         Debug.Log("First Cycle Finished");
         washerSounds.Stop();
+        alarm.Play();
         indicator.GetComponent<Renderer>().material = done_mat;
         yield return new WaitUntil(() => playerInRange && Input.GetKeyDown(KeyCode.E));
+        alarm.Stop();
         indicator.GetComponent<Renderer>().material = off_mat;
         cycleComplete = true;
         Debug.Log("Wash Completed!");
