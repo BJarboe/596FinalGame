@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class DialogueManager : MonoBehaviour
 {
     public Camera myCamera;
+    public AnimationCurve curve;
 
     public GameObject player;
     public string movementScript;
@@ -59,7 +61,18 @@ public class DialogueManager : MonoBehaviour
       
          yield return new WaitUntil(() => om.completed == NumObjectives);
     */
-        
+
+
+    public static DialogueManager Instance { get; private set; } // Singleton instance 
+    private void Awake()
+    {
+        if (Instance == null)
+            Instance = this;
+        else
+            Destroy(gameObject);
+    } // allows other scripts to call functions without messing with memory
+
+
 
     // Start is called before the first frame update
     void Start()
@@ -157,38 +170,49 @@ public class DialogueManager : MonoBehaviour
 
     private IEnumerator SmoothLerp()
     {
-        Vector3 startingPos = myCamera.transform.position;
-        Vector3 nextPos = myCamera.transform.position + (-myCamera.transform.right * 2);
+        float rotationAmount = 45f;
+        Quaternion startRotation = myCamera.transform.rotation;
+        Quaternion leftRotation = startRotation * Quaternion.Euler(0, -rotationAmount, 0);
+        Quaternion rightRotation = startRotation * Quaternion.Euler(0, rotationAmount, 0);
 
         float elapsedTime = 0;
-        while (elapsedTime < 1f)
+        float duration = 0.8f; // Duration for each rotation phase
+
+        // Turn left with easing
+        while (elapsedTime < duration)
         {
-            myCamera.transform.position = Vector3.Lerp(startingPos, nextPos, (elapsedTime / 2f));
+            float t = elapsedTime / duration;
+            myCamera.transform.rotation = Quaternion.Slerp(startRotation, leftRotation, curve.Evaluate(t));
             elapsedTime += Time.deltaTime;
             yield return null;
         }
 
-        Vector3 currPos = myCamera.transform.position;
-        nextPos = myCamera.transform.position + (myCamera.transform.right * 4);
-
+        yield return new WaitForSeconds(1); // Pause at the left
         elapsedTime = 0;
-        while (elapsedTime < 3f)
+
+        // Turn right with easing
+        while (elapsedTime < duration * 2) // Longer duration for a larger movement
         {
-            myCamera.transform.position = Vector3.Lerp(currPos, nextPos, (elapsedTime / 3f));
+            float t = elapsedTime / (duration * 2);
+            myCamera.transform.rotation = Quaternion.Slerp(leftRotation, rightRotation, curve.Evaluate(t));
             elapsedTime += Time.deltaTime;
             yield return null;
         }
 
-        currPos = myCamera.transform.position;
-
+        yield return new WaitForSeconds(1); // Pause at the right
         elapsedTime = 0;
-        while (elapsedTime < 1f)
+
+        // Return to starting position with easing
+        while (elapsedTime < duration)
         {
-            myCamera.transform.position = Vector3.Lerp(currPos, startingPos, (elapsedTime / 1f));
+            float t = elapsedTime / duration;
+            myCamera.transform.rotation = Quaternion.Slerp(rightRotation, startRotation, curve.Evaluate(t));
             elapsedTime += Time.deltaTime;
             yield return null;
         }
     }
+
+    
 
     IEnumerator Scene1b()
     {
