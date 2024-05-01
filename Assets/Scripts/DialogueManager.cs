@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class DialogueManager : MonoBehaviour
 {
+    public Camera myCamera;
+
     public GameObject player;
     public string movementScript;
 
@@ -27,9 +29,11 @@ public class DialogueManager : MonoBehaviour
     public AudioSource aud1d;
     public AudioSource aud1e;
     public AudioSource aud1f;
+    public AudioSource phoneNotif;
     public AudioSource aud1g;
     public AudioSource aud1h;
     public AudioSource phoneDisconn;
+
 
     public AudioSource aud2a;
     public AudioSource aud2b;
@@ -127,11 +131,48 @@ public class DialogueManager : MonoBehaviour
         BoxName.SetActive(true);
         BoxText.SetActive(true);
 
+        StartCoroutine("SmoothLerp");
+
         Name.text = "JUNIA";
         Text.text = "Hey Meg, where are you? I can't see your car anywhere.";
         Click.text = "CLICK TO CONTINUE";
         aud1a.Play();
         yield break;
+    }
+
+    private IEnumerator SmoothLerp()
+    {
+        Vector3 startingPos = myCamera.transform.position;
+        Vector3 nextPos = myCamera.transform.position + (-myCamera.transform.right * 2);
+
+        float elapsedTime = 0;
+        while (elapsedTime < 1f)
+        {
+            myCamera.transform.position = Vector3.Lerp(startingPos, nextPos, (elapsedTime / 2f));
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        Vector3 currPos = myCamera.transform.position;
+        nextPos = myCamera.transform.position + (myCamera.transform.right * 4);
+
+        elapsedTime = 0;
+        while (elapsedTime < 3f)
+        {
+            myCamera.transform.position = Vector3.Lerp(currPos, nextPos, (elapsedTime / 3f));
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        currPos = myCamera.transform.position;
+
+        elapsedTime = 0;
+        while (elapsedTime < 1f)
+        {
+            myCamera.transform.position = Vector3.Lerp(currPos, startingPos, (elapsedTime / 1f));
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
     }
 
     IEnumerator Scene1b()
@@ -191,7 +232,7 @@ public class DialogueManager : MonoBehaviour
 
     IEnumerator Scene1h()
     {
-        aud1b.Stop();
+        aud1g.Stop();
         Name.text = "MEG";
         Text.text = "Love you. See you later.";
         aud1h.Play();
@@ -207,7 +248,9 @@ public class DialogueManager : MonoBehaviour
         Text.text = "I'm off work now, but I still have things to do. Let's look at the list.";
         Click.text = "";
         aud2a.Play();
-        yield return new WaitForSeconds(6f);
+        yield return new WaitForSeconds(5.5f);
+        phoneNotif.Play();
+        yield return new WaitForSeconds(0.5f);
         Text.text = "Alright. So I need to go to the laundromat, get groceries, drop off mail, and \nget some cash from the ATM.";
         aud2b.Play();
         yield return new WaitForSeconds(9.6f);
@@ -218,7 +261,9 @@ public class DialogueManager : MonoBehaviour
         BoxText.SetActive(false);
         Name.text = "";
         Text.text = "";
-        Instructions.text = "PRESS F TO TURN ON FLASHLIGHT";
+        if (checkF == true)
+        {
+            Instructions.text = "PRESS F TO TURN ON FLASHLIGHT";
+        }
     }
-
 }
