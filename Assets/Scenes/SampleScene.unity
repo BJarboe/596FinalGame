@@ -1615,6 +1615,7 @@ MonoBehaviour:
     description: test 2
     status: 0
   final_objective_active: 0
+  completed: 0
 --- !u!4 &1464024463
 Transform:
   m_ObjectHideFlags: 0
@@ -2011,30 +2012,6 @@ PrefabInstance:
     - target: {fileID: 1765680908993925260, guid: 714563eee87bdb544b4facf5ad00c67c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1765680908993925261, guid: 714563eee87bdb544b4facf5ad00c67c, type: 3}
-      propertyPath: m_Size.x
-      value: 0.5892067
-      objectReference: {fileID: 0}
-    - target: {fileID: 1765680908993925261, guid: 714563eee87bdb544b4facf5ad00c67c, type: 3}
-      propertyPath: m_Size.y
-      value: 1.7303
-      objectReference: {fileID: 0}
-    - target: {fileID: 1765680908993925261, guid: 714563eee87bdb544b4facf5ad00c67c, type: 3}
-      propertyPath: m_Size.z
-      value: 0.6218097
-      objectReference: {fileID: 0}
-    - target: {fileID: 1765680908993925261, guid: 714563eee87bdb544b4facf5ad00c67c, type: 3}
-      propertyPath: m_Center.x
-      value: 0.0032596588
-      objectReference: {fileID: 0}
-    - target: {fileID: 1765680908993925261, guid: 714563eee87bdb544b4facf5ad00c67c, type: 3}
-      propertyPath: m_Center.y
-      value: 0.86071
-      objectReference: {fileID: 0}
-    - target: {fileID: 1765680908993925261, guid: 714563eee87bdb544b4facf5ad00c67c, type: 3}
-      propertyPath: m_Center.z
-      value: 0.097806975
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 714563eee87bdb544b4facf5ad00c67c, type: 3}
