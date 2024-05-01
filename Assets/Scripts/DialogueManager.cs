@@ -8,6 +8,7 @@ public class DialogueManager : MonoBehaviour
     public GameObject player;
     public string movementScript;
 
+    
     private bool GUIActive;
     private bool checkMove;
     private bool checkF;
@@ -45,6 +46,16 @@ public class DialogueManager : MonoBehaviour
 
     public AudioSource aud71a;
     public AudioSource aud72a;
+
+
+    public ObjectiveManager om;
+    public int NumObjectives; // set in inspector
+
+    /* paste at beginning of cutscene's coroutine:
+      
+         yield return new WaitUntil(() => om.completed == NumObjectives);
+    */
+        
 
     // Start is called before the first frame update
     void Start()
@@ -111,7 +122,11 @@ public class DialogueManager : MonoBehaviour
             Instructions.text = "";
             checkF = true;
         }
+
+
     }
+
+    
 
     IEnumerator phoneDial()
     {

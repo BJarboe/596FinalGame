@@ -28,6 +28,7 @@ public class ObjectiveManager : MonoBehaviour
     [SerializeField]
     private List<Objective> objectives = new List<Objective>();
     public bool final_objective_active = false;
+    public int completed = 0;
 
     
     public static ObjectiveManager Instance { get; private set; } // Singleton instance 
@@ -72,7 +73,8 @@ public class ObjectiveManager : MonoBehaviour
         if (obj == null || obj.status != Objective.Status.Active) return;
 
         obj.status = Objective.Status.Completed;
-        Debug.Log($"Objective {obj.id} completed.");
+        completed++;
+        Debug.Log($"Objective {obj.id} completed.  Total = {completed}");
         CheckCompletion();
     }
 
