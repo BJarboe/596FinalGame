@@ -15723,6 +15723,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Jason
       objectReference: {fileID: 0}
+    - target: {fileID: 1765680908993925248, guid: 714563eee87bdb544b4facf5ad00c67c, type: 3}
+      propertyPath: m_Speed
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 1765680908993925249, guid: 714563eee87bdb544b4facf5ad00c67c, type: 3}
       propertyPath: m_Controller
       value: 
