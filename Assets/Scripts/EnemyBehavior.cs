@@ -11,8 +11,6 @@ public class EnemyBehavior : MonoBehaviour, IHear
     [SerializeField] private Transform player;
     [SerializeField] private LayerMask whatIsGround, whatIsPlayer;
 
-    [SerializeField] private float health;
-    private bool isDead = false;
     private Vector3 soundWalkpoint;
 
     //Sound Response
@@ -26,18 +24,12 @@ public class EnemyBehavior : MonoBehaviour, IHear
     [SerializeField] private float rotationSpeed = 7f;
     [SerializeField] private float timeBetweenAttacks;
     [SerializeField] private bool alreadyAttacked;
-    public GameObject projectile;
-    [SerializeField] private bool canShoot;
-    [SerializeField] private Transform firePoint;
 
     //States
     [SerializeField] private float sightRange, attackRange;
     [SerializeField] private bool playerInSightRange, playerInAttackRange;
 
-    //public EnemySpawner spawner;
-
-    private enum MovementState { walk, run, punch }
-
+    
     private void Awake()
     {
         player = GameObject.Find("Player").transform;
@@ -58,32 +50,22 @@ public class EnemyBehavior : MonoBehaviour, IHear
 
         CheckSoundResponse();
 
-        if (isDead == false)
+        if (isRespondingToSound == false)
         {
-            if (isRespondingToSound == false)
+            if (!playerInSightRange && !playerInAttackRange)
             {
-                if (!playerInSightRange && !playerInAttackRange)
-                {
-                    Patrolling();
-                }
-                if (playerInSightRange && !playerInAttackRange)
-                {
-                    ChasePlayer();
-                }
-                if (playerInSightRange && playerInAttackRange)
-                {
-                    AttackPlayer();
-                }
+                Patrolling();
+            }
+            if (playerInSightRange && !playerInAttackRange)
+            {
+                ChasePlayer();
+            }
+            if (playerInSightRange && playerInAttackRange)
+            {
+                AttackPlayer();
             }
         }
-        else
-        {
-            agent.SetDestination(transform.position);
-            Vector3 dir = player.position - transform.position;
-            dir.y = 0.0f;
-            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dir), rotationSpeed * Time.deltaTime);
-        }
-        
+
     }
 
     public void Patrolling()
@@ -127,37 +109,28 @@ public class EnemyBehavior : MonoBehaviour, IHear
     public void ChasePlayer()
     {
         anim.SetInteger("State", 1);
-        agent.speed = 7f;
+        agent.speed = 5f;
         agent.SetDestination(player.position);
     }
 
     public void AttackPlayer()
     {
-        //int attackStateNum = Random.Range(2, 4);
-        anim.SetInteger("State", 3);
+        anim.SetInteger("State", 2);
+        //anim.SetInteger("AttackIndex", Random.Range(0, 5));
+
+        agent.speed = 0f;
+
+        agent.SetDestination(player.position);
 
         Vector3 dir = player.position - transform.position;
         dir.y = 0.0f;
         transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dir), rotationSpeed * Time.deltaTime);
 
-        agent.speed = 8f;
-
 
         if (!alreadyAttacked)
         {
-            if (canShoot)
-            {
-                //Shooting code
-                agent.SetDestination(transform.position);
-
-                Rigidbody rb = Instantiate(projectile, firePoint.position, firePoint.rotation).GetComponent<Rigidbody>();
-                rb.AddForce(transform.forward * 32f, ForceMode.Impulse);
-                rb.AddForce(transform.up * -2f, ForceMode.Impulse);
-            }
-            else
-            {
-                //Melee Code
-            }
+            //agent.SetDestination(transform.position);
+            anim.SetInteger("AttackIndex", Random.Range(0, 5));
 
             alreadyAttacked = true;
             Invoke(nameof(ResetAttack), timeBetweenAttacks);
@@ -195,25 +168,5 @@ public class EnemyBehavior : MonoBehaviour, IHear
     private void ResetAttack()
     {
         alreadyAttacked = false;
-    }
-
-    public void TakeDamage(int damage)
-    {
-        health -= damage;
-
-        if (health < 0 && isDead == false)
-        {
-            isDead = true;
-            anim.SetBool("Dead", true);
-
-            Invoke(nameof(Die), 2f);
-        }
-    }
-
-    private void Die()
-    {
-        //spawner.DecreaseEnemiesAlive();
-        //spawner.RegisterKill();
-        Destroy(gameObject);
     }
 }
