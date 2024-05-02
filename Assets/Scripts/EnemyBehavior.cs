@@ -127,13 +127,14 @@ public class EnemyBehavior : MonoBehaviour, IHear
     public void ChasePlayer()
     {
         anim.SetInteger("State", 1);
-        agent.speed = 8f;
+        agent.speed = 7f;
         agent.SetDestination(player.position);
     }
 
     public void AttackPlayer()
     {
-        anim.SetInteger("State", 2);
+        //int attackStateNum = Random.Range(2, 4);
+        anim.SetInteger("State", 3);
 
         Vector3 dir = player.position - transform.position;
         dir.y = 0.0f;
