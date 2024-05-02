@@ -1,13 +1,22 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement; // Corrected this line
+using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
+    [SerializeField] private AudioSource click;
+    [SerializeField] private float delay = 2.0f; // Delay in seconds, adjust as needed
+
     public void Play()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        StartCoroutine(PlaySoundAndLoadScene());
+    }
+
+    private IEnumerator PlaySoundAndLoadScene()
+    {
+        click.Play(); // Play click sound
+        yield return new WaitForSeconds(delay); // Wait while sound plays
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1); // Load next scene
     }
 
     public void Quit()
