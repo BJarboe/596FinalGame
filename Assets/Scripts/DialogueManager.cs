@@ -42,16 +42,16 @@ public class DialogueManager : MonoBehaviour
     public AudioSource aud2b;
     public AudioSource aud2c;
 
-    public AudioSource aud3a;
-    public AudioSource aud3b;
+    //public AudioSource aud3a;
+    //public AudioSource aud3b;
 
-    public AudioSource aud5a;
+    //public AudioSource aud5a;
 
-    public AudioSource aud6a;
-    public AudioSource aud6b;
+    //public AudioSource aud6a;
+    //public AudioSource aud6b;
 
-    public AudioSource aud71a;
-    public AudioSource aud72a;
+    //public AudioSource aud71a;
+    //public AudioSource aud72a;
 
 
     public ObjectiveManager om;
