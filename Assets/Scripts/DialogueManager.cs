@@ -141,9 +141,7 @@ public class DialogueManager : MonoBehaviour
         }
 
 
-    }
-
-    
+    } 
 
     IEnumerator phoneDial()
     {
@@ -210,9 +208,7 @@ public class DialogueManager : MonoBehaviour
             elapsedTime += Time.deltaTime;
             yield return null;
         }
-    }
-
-    
+    }  
 
     IEnumerator Scene1b()
     {
@@ -300,7 +296,7 @@ public class DialogueManager : MonoBehaviour
         BoxText.SetActive(false);
         Name.text = "";
         Text.text = "";
-        if (checkF == true)
+        if (checkF != true)
         {
             Instructions.text = "PRESS F TO TURN ON FLASHLIGHT";
         }
