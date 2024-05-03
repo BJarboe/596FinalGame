@@ -11,7 +11,6 @@ public class DialogueManager : MonoBehaviour
 
     public GameObject player;
     public string movementScript;
-
     
     private bool GUIActive;
     private bool checkMove;
@@ -24,6 +23,9 @@ public class DialogueManager : MonoBehaviour
     public TMPro.TextMeshProUGUI Text;
     public TMPro.TextMeshProUGUI Click;
     public TMPro.TextMeshProUGUI Instructions;
+    public GameObject notif1;
+    public GameObject notif2;
+    public GameObject notif3;
 
     public AudioSource phoneRing;
     public AudioSource aud1a;
@@ -37,13 +39,9 @@ public class DialogueManager : MonoBehaviour
     public AudioSource aud1h;
     public AudioSource phoneDisconn;
 
-
     public AudioSource aud2a;
     public AudioSource aud2b;
     public AudioSource aud2c;
-
-    //public AudioSource aud3a;
-    //public AudioSource aud3b;
 
     //public AudioSource aud5a;
 
@@ -53,9 +51,8 @@ public class DialogueManager : MonoBehaviour
     //public AudioSource aud71a;
     //public AudioSource aud72a;
 
-
     public ObjectiveManager om;
-    public int NumObjectives; // set in inspector
+    //public int NumObjectives; // set in inspector
 
     /* paste at beginning of cutscene's coroutine:
       
@@ -72,8 +69,6 @@ public class DialogueManager : MonoBehaviour
             Destroy(gameObject);
     } // allows other scripts to call functions without messing with memory
 
-
-
     // Start is called before the first frame update
     void Start()
     {
@@ -89,6 +84,10 @@ public class DialogueManager : MonoBehaviour
         Text.text = "";
         Click.text = "";
         Instructions.text = "";
+
+        notif1.SetActive(false);
+        notif2.SetActive(false);
+        notif3.SetActive(false);
 
         StartCoroutine("phoneDial"); ////
     }
@@ -140,7 +139,10 @@ public class DialogueManager : MonoBehaviour
             checkF = true;
         }
 
-
+        if (om.completed == 2)
+        {
+            StartCoroutine("Scene4");
+        }
     } 
 
     IEnumerator phoneDial()
@@ -300,5 +302,26 @@ public class DialogueManager : MonoBehaviour
         {
             Instructions.text = "PRESS F TO TURN ON FLASHLIGHT";
         }
+    }
+
+    IEnumerator Scene3()
+    {
+        yield break;
+    }
+    
+    IEnumerator Scene4()
+    {
+        notif1.SetActive(true);
+        phoneNotif.Play();
+        yield return new WaitForSeconds(2f);
+        notif2.SetActive(true);
+        phoneNotif.Play();
+        yield return new WaitForSeconds(2f);
+        notif3.SetActive(true);
+        phoneNotif.Play();
+        yield return new WaitForSeconds(4f);
+        notif1.SetActive(true);
+        notif2.SetActive(true);
+        notif3.SetActive(true);
     }
 }
