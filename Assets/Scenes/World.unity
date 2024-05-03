@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.000055046083, g: 0.00014094963, b: 0.0042733354, a: 1}
+  m_IndirectSpecularColor: {r: 0.00006507212, g: 0.00014093838, b: 0.004272889, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -26977,13 +26977,6 @@ MonoBehaviour:
   aud2a: {fileID: 2081969832}
   aud2b: {fileID: 659876132}
   aud2c: {fileID: 1850629322}
-  aud3a: {fileID: 0}
-  aud3b: {fileID: 0}
-  aud5a: {fileID: 0}
-  aud6a: {fileID: 0}
-  aud6b: {fileID: 0}
-  aud71a: {fileID: 0}
-  aud72a: {fileID: 0}
   om: {fileID: 1485807000}
   NumObjectives: 5
 --- !u!1 &1137562780
@@ -34423,7 +34416,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1447863924}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: c59195dd2ecdeac4884d24a6cf8b1eaa, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
