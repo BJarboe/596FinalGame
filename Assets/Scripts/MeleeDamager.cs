@@ -14,7 +14,7 @@ public class MeleeDamager : MonoBehaviour
     void Start()
     {
         col = GetComponent<BoxCollider>();
-        enemy = GetComponent<EnemyBehavior>();
+        enemy = GameObject.FindGameObjectWithTag("Enemy").GetComponent<EnemyBehavior>();
         col.enabled = false;
     }
 

@@ -1872,6 +1872,11 @@ MonoBehaviour:
     status: 0
   final_objective_active: 0
   completed: 0
+  atm: {fileID: 0}
+  laundry: {fileID: 0}
+  mail: {fileID: 0}
+  grocery: {fileID: 0}
+  dm: {fileID: 0}
 --- !u!4 &1464024463
 Transform:
   m_ObjectHideFlags: 0
@@ -2331,6 +2336,14 @@ PrefabInstance:
     - target: {fileID: 1426275222649424438, guid: 714563eee87bdb544b4facf5ad00c67c, type: 3}
       propertyPath: m_Name
       value: Jason
+      objectReference: {fileID: 0}
+    - target: {fileID: 1426275222649424438, guid: 714563eee87bdb544b4facf5ad00c67c, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1426275222649424438, guid: 714563eee87bdb544b4facf5ad00c67c, type: 3}
+      propertyPath: m_TagString
+      value: Enemy
       objectReference: {fileID: 0}
     - target: {fileID: 1600284585459160975, guid: 714563eee87bdb544b4facf5ad00c67c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

@@ -50,6 +50,7 @@ public class EnemyBehavior : MonoBehaviour, IHear
         playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
 
         CheckSoundResponse();
+        SetIsAttacking(false);
 
         if (isRespondingToSound == false)
         {
@@ -139,12 +140,11 @@ public class EnemyBehavior : MonoBehaviour, IHear
             Invoke(nameof(ResetAttack), timeBetweenAttacks);
         }
 
-        SetIsAttacking(false);
     }
 
     public void SetIsAttacking(bool isAttacking)
     {
-        this.isAttacking= isAttacking;
+        this.isAttacking = isAttacking;
     }
 
     public bool GetIsAttacking()
