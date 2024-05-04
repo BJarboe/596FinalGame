@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 /** Usage:
  *      Objectives defined as objects in 'Objective' class
@@ -13,8 +14,6 @@ using UnityEngine;
  *      When all objectives are completed, player enters end-game with a final objective
  */
 
-
-
 [System.Serializable]
 public class Objective
 {
@@ -23,6 +22,7 @@ public class Objective
     public enum Status { Inactive, Active, Completed, Failed};
     public Status status = Status.Inactive;
 }
+
 public class ObjectiveManager : MonoBehaviour
 {
     [SerializeField]
@@ -30,7 +30,6 @@ public class ObjectiveManager : MonoBehaviour
     public bool final_objective_active = false;
     public int completed = 0;
 
-    
     public static ObjectiveManager Instance { get; private set; } // Singleton instance 
     private void Awake()
     {
@@ -40,11 +39,57 @@ public class ObjectiveManager : MonoBehaviour
             Destroy(gameObject);
     } // allows other scripts to call functions without messing with memory
 
+    public TMPro.TextMeshProUGUI atm;
+    public TMPro.TextMeshProUGUI laundry;
+    public TMPro.TextMeshProUGUI mail;
+    public TMPro.TextMeshProUGUI grocery;
+
+    public DialogueManager dm;
+    private bool atmDone = false;
+
+    public void Update()
+    {
+        Objective objATM = GetObjective("ATM");
+        Objective objLaundry = GetObjective("Laundromat");
+        //Objective objMail = GetObjective("Mail"); // ID for mail
+        //Objective objGrocery = GetObjective("Grocery"); // ID for grocery
+
+        if (objATM.status == Objective.Status.Completed)
+        {
+            atm.text = "<s>collect money from atm</s>";
+            if (atmDone == false)
+            {
+                StartCoroutine(dm.Scene4());
+            }
+            atmDone = true;
+        }
+
+        if (objLaundry.status == Objective.Status.Completed)
+        {
+            laundry.text = "<s>pick up clothes from laundromat</s>";
+            
+        }
+
+        //if (objMail.status == Objective.Status.Completed)
+        //{
+        //    atm.text = "<s>drop off mail</s>";
+        //}
+
+        //if (objGrocery.status == Objective.Status.Completed)
+        //{
+        //    atm.text = "<s>buy groceries</s>";
+        //}
+    }
+    
     public Objective GetObjective(string name)
     {
         return objectives.Find(o => o.id == name);
     }
 
+    public Objective.Status ReturnStatus(string name)
+    {
+        return objectives.Find(o => o.id == name).status;
+    }
 
     public bool StartObjective(string id)
     {
