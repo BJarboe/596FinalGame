@@ -79,7 +79,6 @@ public class PlayerMovement : MonoBehaviour
         currentStamina = stamina;
     }
 
-
     private void FixedUpdate()
     {
         Movement();

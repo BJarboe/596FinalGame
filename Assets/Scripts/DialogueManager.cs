@@ -23,6 +23,11 @@ public class DialogueManager : MonoBehaviour
     public TMPro.TextMeshProUGUI Text;
     public TMPro.TextMeshProUGUI Click;
     public TMPro.TextMeshProUGUI Instructions;
+    public TMPro.TextMeshProUGUI TODO;
+    public TMPro.TextMeshProUGUI Atm;
+    public TMPro.TextMeshProUGUI Laundry;
+    public TMPro.TextMeshProUGUI Mail;
+    public TMPro.TextMeshProUGUI Grocery;
     public GameObject notif1;
     public GameObject notif2;
     public GameObject notif3;
@@ -42,14 +47,6 @@ public class DialogueManager : MonoBehaviour
     public AudioSource aud2a;
     public AudioSource aud2b;
     public AudioSource aud2c;
-
-    //public AudioSource aud5a;
-
-    //public AudioSource aud6a;
-    //public AudioSource aud6b;
-
-    //public AudioSource aud71a;
-    //public AudioSource aud72a;
 
     public ObjectiveManager om;
     //public int NumObjectives; // set in inspector
@@ -85,12 +82,21 @@ public class DialogueManager : MonoBehaviour
         Click.text = "";
         Instructions.text = "";
 
+        TODO.text = "";
+        Atm.text = "";
+        Laundry.text = "";
+        Mail.text = "";
+        Grocery.text = "";
+
         notif1.SetActive(false);
         notif2.SetActive(false);
         notif3.SetActive(false);
 
         StartCoroutine("phoneDial"); ////
     }
+
+    // check if coroutine finishes to avoid issues with controls
+    private bool isCoroutineRunning = false;
 
     void Update()
     {
@@ -121,12 +127,17 @@ public class DialogueManager : MonoBehaviour
                     StartCoroutine("Scene1h");
                     break;
                 case 8:
-                    (player.GetComponent(movementScript) as MonoBehaviour).enabled = true;
                     GUIActive = false;
                     StartCoroutine("Scene2");
                     break;
             }
         }
+
+        if (sceneNum >= 8 && isCoroutineRunning == false)
+        {
+            (player.GetComponent(movementScript) as MonoBehaviour).enabled = true;
+        }
+
         if (checkMove == false & Input.GetKeyDown(KeyCode.W) & sceneNum == 8)
         {
             Instructions.text = "";
@@ -137,11 +148,6 @@ public class DialogueManager : MonoBehaviour
         {
             Instructions.text = "";
             checkF = true;
-        }
-
-        if (om.completed == 2)
-        {
-            StartCoroutine("Scene4");
         }
     } 
 
@@ -170,6 +176,7 @@ public class DialogueManager : MonoBehaviour
 
     private IEnumerator SmoothLerp()
     {
+        isCoroutineRunning = true;
         float rotationAmount = 45f;
         Quaternion startRotation = myCamera.transform.rotation;
         Quaternion leftRotation = startRotation * Quaternion.Euler(0, -rotationAmount, 0);
@@ -210,6 +217,7 @@ public class DialogueManager : MonoBehaviour
             elapsedTime += Time.deltaTime;
             yield return null;
         }
+        isCoroutineRunning = false;
     }  
 
     IEnumerator Scene1b()
@@ -287,6 +295,11 @@ public class DialogueManager : MonoBehaviour
         aud2a.Play();
         yield return new WaitForSeconds(5.5f);
         phoneNotif.Play();
+        TODO.text = "TO DO:";
+        Atm.text = "collect money from the ATM";
+        Laundry.text = "pick up clothes from laundromat";
+        Mail.text = "drop off mail";
+        Grocery.text = "buy groceries";
         yield return new WaitForSeconds(0.5f);
         Text.text = "Alright. So I need to go to the laundromat, get groceries, drop off mail, and \nget some cash from the ATM.";
         aud2b.Play();
@@ -303,13 +316,8 @@ public class DialogueManager : MonoBehaviour
             Instructions.text = "PRESS F TO TURN ON FLASHLIGHT";
         }
     }
-
-    IEnumerator Scene3()
-    {
-        yield break;
-    }
     
-    IEnumerator Scene4()
+    public IEnumerator Scene4()
     {
         notif1.SetActive(true);
         phoneNotif.Play();
@@ -320,8 +328,8 @@ public class DialogueManager : MonoBehaviour
         notif3.SetActive(true);
         phoneNotif.Play();
         yield return new WaitForSeconds(4f);
-        notif1.SetActive(true);
-        notif2.SetActive(true);
-        notif3.SetActive(true);
+        notif1.SetActive(false);
+        notif2.SetActive(false);
+        notif3.SetActive(false);
     }
 }
