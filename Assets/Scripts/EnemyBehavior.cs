@@ -24,6 +24,7 @@ public class EnemyBehavior : MonoBehaviour, IHear
     [SerializeField] private float rotationSpeed = 7f;
     [SerializeField] private float timeBetweenAttacks;
     [SerializeField] private bool alreadyAttacked;
+    [SerializeField] private bool isAttacking;
 
     //States
     [SerializeField] private float sightRange, attackRange;
@@ -116,11 +117,13 @@ public class EnemyBehavior : MonoBehaviour, IHear
     public void AttackPlayer()
     {
         anim.SetInteger("State", 2);
+        SetIsAttacking(true);
+
         //anim.SetInteger("AttackIndex", Random.Range(0, 5));
 
-        agent.speed = 0f;
+        //agent.speed = 0f;
 
-        agent.SetDestination(player.position);
+        //agent.SetDestination(player.position);
 
         Vector3 dir = player.position - transform.position;
         dir.y = 0.0f;
@@ -135,6 +138,18 @@ public class EnemyBehavior : MonoBehaviour, IHear
             alreadyAttacked = true;
             Invoke(nameof(ResetAttack), timeBetweenAttacks);
         }
+
+        SetIsAttacking(false);
+    }
+
+    public void SetIsAttacking(bool isAttacking)
+    {
+        this.isAttacking= isAttacking;
+    }
+
+    public bool GetIsAttacking()
+    {
+        return isAttacking;
     }
 
     public void RespondToSound(Sound sound)
