@@ -54,9 +54,16 @@ public class DialogueManager : MonoBehaviour
     public ObjectiveManager om;
     //public int NumObjectives; // set in inspector
 
-    /* paste at beginning of cutscene's coroutine:
-      
-         yield return new WaitUntil(() => om.completed == NumObjectives);
+    /* amount completed boolean:
+         om.completed == NumObjectives;
+    */
+
+
+    public VideoManager vm;
+
+    /* Method to play cutscene
+        vm.PlayCutscene( CUTSCENE-NUMBER );
+        yield return new WaitForSeconds( CUTSCENE-DURATION );
     */
 
 

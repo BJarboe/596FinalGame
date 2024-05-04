@@ -7,6 +7,8 @@ public class Laundromat : MonoBehaviour
 {
     [SerializeField]
     private GameObject indicator;
+    [SerializeField]
+    private VideoManager vm;
 
     [SerializeField]
     private Material on_mat;
@@ -64,6 +66,8 @@ public class Laundromat : MonoBehaviour
 
     IEnumerator FirstWashCycle()
     {
+        vm.PlayCutscene(3); 
+        yield return new WaitForSeconds(8); // wait for cutscene to finish
         indicator.GetComponent<Renderer>().material = on_mat;
         om.StartObjective("Laundromat");
         washerSounds.Play();
