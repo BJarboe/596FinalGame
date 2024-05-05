@@ -57,6 +57,7 @@ public class ATM : MonoBehaviour
         vid.Play();
         yield return new WaitForSeconds((float)vid.length - 4.2f);
         vid.Stop();
+        yield return new WaitUntil(() => playerInRange && Input.GetKeyDown(KeyCode.E));
         obj.CompleteObjective("ATM");
         StartCoroutine(Withdrawal());
     }
@@ -79,7 +80,7 @@ public class ATM : MonoBehaviour
         rb.isKinematic = false;
         rb.detectCollisions = true;
         rb.useGravity = true;
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(1);
         emmission.enabled = false;
         cash.SetActive(false);
     }

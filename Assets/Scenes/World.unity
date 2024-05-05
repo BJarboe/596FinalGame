@@ -49345,6 +49345,9 @@ MonoBehaviour:
   - id: Laundromat
     description: Complete Wash + Dry Cycle
     status: 0
+  - id: Mail
+    description: Mail out the package
+    status: 0
   final_objective_active: 0
   completed: 0
   atm: {fileID: 749350542}

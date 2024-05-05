@@ -10,6 +10,12 @@ public class Laundromat : MonoBehaviour
     [SerializeField]
     private VideoManager vm;
 
+    private enum status { OFF, ON, READY, DONE}
+    status state;
+
+    [SerializeField]
+    private TMPro.TextMeshProUGUI Instructions;
+
     [SerializeField]
     private Material on_mat;
 
@@ -37,14 +43,48 @@ public class Laundromat : MonoBehaviour
     {
         cycleComplete = false;
         obj = om.GetObjective("Laundromat");
-        indicator.GetComponent<Renderer>().material = off_mat;
         washerSounds.loop = true;
         alarm.time = 9;
+        state = status.OFF;
     }
     private void Update()
     {
         if (playerInRange && Input.GetKeyDown(KeyCode.E) && obj.status == Objective.Status.Inactive)
             StartCoroutine(FirstWashCycle());
+        
+        
+        switch (state) // Indicator light handler
+        {
+            case status.OFF:
+                indicator.GetComponent<Renderer>().material = off_mat;
+                break;
+            case status.ON:
+                indicator.GetComponent<Renderer>().material = on_mat;
+                break;
+            case status.READY:
+                indicator.GetComponent<Renderer>().material = done_mat;
+                break;
+            case status.DONE:
+                indicator.GetComponent<Renderer>().material = off_mat;
+                break;
+        }
+
+        if (playerInRange)
+        {
+            switch (state) // Display instructions
+            {
+                case status.OFF:
+                case status.DONE:
+                    Instructions.text = "PRESS E TO START CYCLE";
+                    break;
+                case status.ON:
+                    Instructions.text = "WAIT FOR CYCLE TO FINISH";
+                    break;
+                case status.READY:
+                    Instructions.text = "PRESS E TO GRAB LAUNDRY";
+                    break;
+            }
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -52,6 +92,9 @@ public class Laundromat : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             Debug.Log("Laundromat detected Player");
+
+            
+            
             playerInRange = true;
         }
     }
@@ -61,24 +104,28 @@ public class Laundromat : MonoBehaviour
         {
             Debug.Log("Player left Laundromat boundary");
             playerInRange = false;
+            Instructions.text = "";
         }
     }
 
     IEnumerator FirstWashCycle()
     {
+        
+        Instructions.text = "";
         vm.PlayCutscene(3); 
         yield return new WaitForSeconds(8); // wait for cutscene to finish
-        indicator.GetComponent<Renderer>().material = on_mat;
+        state = status.ON;
         om.StartObjective("Laundromat");
         washerSounds.Play();
         yield return new WaitForSeconds(waitDuration);
+        state = status.READY;
         Debug.Log("First Cycle Finished");
         washerSounds.Stop();
         alarm.Play();
-        indicator.GetComponent<Renderer>().material = done_mat;
         yield return new WaitUntil(() => playerInRange && Input.GetKeyDown(KeyCode.E));
+        state = status.DONE;
+        Instructions.text = "";
         alarm.Stop();
-        indicator.GetComponent<Renderer>().material = off_mat;
         cycleComplete = true;
         Debug.Log("Wash Completed!");
     }
