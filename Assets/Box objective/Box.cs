@@ -2,10 +2,6 @@ using UnityEngine;
 
 public class Box : MonoBehaviour
 {
-    public ObjectiveManager obj; // Reference to the ObjectiveManager script
-    // ID for the box pickup objective
-    public GameObject pickupEffect; // Effect to play when the box is picked up
-
     private bool playerInRange = false; // Flag to track if the player is in range to pick up the box
     private bool activated = false; // Flag to track if the box pickup has been activated
     private Rigidbody rb; // Rigidbody component of the box
@@ -21,31 +17,25 @@ public class Box : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E) && playerInRange && !activated)
         {
             activated = true;
-            if (obj.StartObjective("Mail"))
-            {
-                PickUpBox();
-            }
-            else
-            {
-                Debug.Log($"{"Mail"} objective couldn't activate..");
-                activated = false;
-            }
+            PickUpBox();
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Player"))
+        if (other.CompareTag("Player"))
         {
+            // Player is in range to pick up the box
             playerInRange = true;
-            Debug.Log($"{"Mail"}: Player in range");
+            Debug.Log("Player in range to pick up the box.");
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.CompareTag("Player"))
+        if (other.CompareTag("Player"))
         {
+            // Player is no longer in range to pick up the box
             playerInRange = false;
         }
     }
@@ -56,11 +46,17 @@ public class Box : MonoBehaviour
         gameObject.SetActive(false);
         // Disable physics simulation for the box
         rb.isKinematic = true;
+    }
 
-        // Play pickup effect if available
-        if (pickupEffect != null)
-        {
-            Instantiate(pickupEffect, transform.position, Quaternion.identity);
-        }
+    // Method to check if the player has the box
+    public bool HasBox()
+    {
+        return !gameObject.activeSelf; // Returns true if the box is inactive (picked up by the player)
+    }
+
+    // Method to destroy the box
+    public void DestroyBox()
+    {
+        Destroy(gameObject);
     }
 }
