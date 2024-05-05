@@ -5,7 +5,10 @@ public class Box : MonoBehaviour
     private bool playerInRange = false; // Flag to track if the player is in range to pick up the box
     private bool activated = false; // Flag to track if the box pickup has been activated
     private Rigidbody rb; // Rigidbody component of the box
-    
+
+    [SerializeField]
+    private TMPro.TextMeshProUGUI instructions;
+
 
     [SerializeField]
     private ObjectiveManager om;
@@ -23,9 +26,8 @@ public class Box : MonoBehaviour
             activated = true;
             if (om.StartObjective("Mail"))
             {
+                instructions.text = "";
                 PickUpBox();
-                
-
             }
             else
             {
@@ -33,6 +35,8 @@ public class Box : MonoBehaviour
                 activated = false;
             }
         }
+        if (playerInRange)
+            instructions.text = "PICK UP PACKAGE";
     }
 
     private void OnTriggerEnter(Collider other)
@@ -51,6 +55,7 @@ public class Box : MonoBehaviour
         {
             // Player is no longer in range to pick up the box
             playerInRange = false;
+            instructions.text = "";
         }
     }
 

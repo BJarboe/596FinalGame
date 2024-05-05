@@ -9,6 +9,8 @@ public class DialogueManager : MonoBehaviour
     public Camera myCamera;
     public AnimationCurve curve;
 
+    public bool skipScene = false;
+
     public GameObject player;
     public string movementScript;
     
@@ -78,7 +80,8 @@ public class DialogueManager : MonoBehaviour
     {
         checkF = false;
         checkMove = false;
-        (player.GetComponent(movementScript) as MonoBehaviour).enabled = false; ////
+        if (!skipScene)
+            (player.GetComponent(movementScript) as MonoBehaviour).enabled = false; ////
 
         sceneNum = 0;
         
@@ -99,7 +102,8 @@ public class DialogueManager : MonoBehaviour
         notif2.SetActive(false);
         notif3.SetActive(false);
 
-        StartCoroutine("phoneDial"); ////
+        if (!skipScene)
+            StartCoroutine("phoneDial"); ////
     }
 
     // check if coroutine finishes to avoid issues with controls
