@@ -119,6 +119,8 @@ public class EnemyBehavior : MonoBehaviour, IHear
     {
         anim.SetInteger("State", 2);
         SetIsAttacking(true);
+        agent.speed = 0f;
+        agent.SetDestination(transform.position);
 
         //anim.SetInteger("AttackIndex", Random.Range(0, 5));
 

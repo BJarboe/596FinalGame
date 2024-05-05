@@ -167,8 +167,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.22030258, y: 0.13409376, z: 0.18047905}
-  m_Center: {x: -0.019224167, y: -0.013898373, z: -0.024884224}
+  m_Size: {x: 0.4606915, y: 0.13409376, z: 0.18047905}
+  m_Center: {x: 0.10097029, y: -0.013898344, z: -0.024884254}
 --- !u!114 &75666586
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -181,8 +181,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a8980814f58ae543b43691dfec37985, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  vm: {fileID: 0}
   col: {fileID: 75666585}
   enemy: {fileID: 1045312820}
+  player: {fileID: 0}
 --- !u!1 &98077776
 GameObject:
   m_ObjectHideFlags: 0
@@ -832,8 +834,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.22030258, y: 0.13409376, z: 0.18047905}
-  m_Center: {x: -0.019224167, y: -0.013898373, z: -0.024884224}
+  m_Size: {x: 0.4237079, y: 0.13409376, z: 0.18047905}
+  m_Center: {x: -0.12092683, y: -0.01389838, z: -0.024884213}
 --- !u!114 &655820838
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -846,8 +848,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a8980814f58ae543b43691dfec37985, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  vm: {fileID: 0}
   col: {fileID: 655820837}
   enemy: {fileID: 1045312820}
+  player: {fileID: 0}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -1164,8 +1168,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a8980814f58ae543b43691dfec37985, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  vm: {fileID: 0}
   col: {fileID: 1019449410}
   enemy: {fileID: 1045312820}
+  player: {fileID: 0}
 --- !u!114 &1045312820 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1765680908993925251, guid: 714563eee87bdb544b4facf5ad00c67c, type: 3}
@@ -1445,8 +1451,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a8980814f58ae543b43691dfec37985, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  vm: {fileID: 0}
   col: {fileID: 1190191454}
   enemy: {fileID: 1045312820}
+  player: {fileID: 0}
 --- !u!1 &1216171400
 GameObject:
   m_ObjectHideFlags: 0
@@ -2365,6 +2373,10 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 1519331325}
+    - target: {fileID: 1765680908993925251, guid: 714563eee87bdb544b4facf5ad00c67c, type: 3}
+      propertyPath: attackRange
+      value: 1.5
+      objectReference: {fileID: 0}
     - target: {fileID: 1765680908993925260, guid: 714563eee87bdb544b4facf5ad00c67c, type: 3}
       propertyPath: m_RootOrder
       value: 1
