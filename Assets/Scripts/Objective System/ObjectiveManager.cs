@@ -51,7 +51,7 @@ public class ObjectiveManager : MonoBehaviour
     {
         Objective objATM = GetObjective("ATM");
         Objective objLaundry = GetObjective("Laundromat");
-        //Objective objMail = GetObjective("Mail"); // ID for mail
+        Objective objMail = GetObjective("Mail"); // ID for mail
         //Objective objGrocery = GetObjective("Grocery"); // ID for grocery
 
         if (objATM.status == Objective.Status.Completed)
@@ -70,10 +70,10 @@ public class ObjectiveManager : MonoBehaviour
             
         }
 
-        //if (objMail.status == Objective.Status.Completed)
-        //{
-        //    atm.text = "<s>drop off mail</s>";
-        //}
+        if (objMail.status == Objective.Status.Completed)
+        {
+            atm.text = "<s>drop off mail</s>";
+        }
 
         //if (objGrocery.status == Objective.Status.Completed)
         //{

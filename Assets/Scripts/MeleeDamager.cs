@@ -5,8 +5,10 @@ using UnityEngine.AI;
 
 public class MeleeDamager : MonoBehaviour
 {
+    public VideoManager vm;
     [SerializeField] private BoxCollider col;
     public EnemyBehavior enemy;
+    public PlayerMovement player;
 
     private bool isEnemyAttacking;
 
@@ -15,6 +17,8 @@ public class MeleeDamager : MonoBehaviour
     {
         col = GetComponent<BoxCollider>();
         enemy = GameObject.FindGameObjectWithTag("Enemy").GetComponent<EnemyBehavior>();
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
+
         col.enabled = false;
     }
 
@@ -34,6 +38,12 @@ public class MeleeDamager : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        //Damage or respawn player
+        //Play death cutscene
+        /* Method to play cutscene
+        vm.PlayCutscene( CUTSCENE-NUMBER );
+        yield return new WaitForSeconds( CUTSCENE-DURATION );
+        */
+
+        //reset player and enemy
     }
 }
