@@ -24,6 +24,7 @@ public class Box : MonoBehaviour
             {
                 PickUpBox();
                 
+
             }
             else
             {
@@ -63,11 +64,13 @@ public class Box : MonoBehaviour
     public bool HasBox()
     {
         return !gameObject.activeSelf; // Returns true if the box is inactive (picked up by the player)
+       
     }
 
     // Method to destroy the box
     public void DestroyBox()
     {
         Destroy(gameObject);
+        
     }
 }

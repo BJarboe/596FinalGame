@@ -3,14 +3,11 @@ using UnityEngine;
 public class CustomMarkerBox : MonoBehaviour
 {
     public ObjectiveManager objManager;
-    public string boxObjectiveID; // Objective ID associated with picking up the box
     public string mailboxObjectiveID; // Objective ID associated with delivering the box to the mailbox
     public GameObject mailboxMarker; // Reference to the marker at the mailbox
 
-    private Objective boxObjective;
     private Objective mailboxObjective;
-
-    private Renderer rend;
+    private Renderer markerRenderer;
 
     // Floating animation
     private Vector3 startPos;
@@ -20,12 +17,10 @@ public class CustomMarkerBox : MonoBehaviour
 
     private void Start()
     {
-        rend = GetComponent<Renderer>();
-        rend.enabled = false;
         startPos = transform.position;
-        boxObjective = objManager.GetObjective(boxObjectiveID);
+        markerRenderer = mailboxMarker.GetComponent<Renderer>();
+        markerRenderer.enabled = false; // Disable the mailbox marker initially
         mailboxObjective = objManager.GetObjective(mailboxObjectiveID);
-        mailboxMarker.SetActive(false); // Disable the mailbox marker initially
     }
 
     private void Update()
@@ -35,18 +30,16 @@ public class CustomMarkerBox : MonoBehaviour
         transform.position = tempPos;
         transform.Rotate(Vector3.up, r * Time.deltaTime);
 
-        // Check if the box objective is completed
-        if (boxObjective != null && boxObjective.status == Objective.Status.Completed)
+        // Check if the mailbox objective is active or completed
+        if (mailboxObjective != null && (mailboxObjective.status == Objective.Status.Active))
         {
             // Enable the marker at the mailbox
-            mailboxMarker.SetActive(true);
+            markerRenderer.enabled = true;
         }
-
-        // Check if the mailbox objective is completed
-        if (mailboxObjective != null && mailboxObjective.status == Objective.Status.Completed)
+        else
         {
             // Disable the marker at the mailbox
-            mailboxMarker.SetActive(false);
+            markerRenderer.enabled = false;
         }
     }
 }

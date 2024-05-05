@@ -2,21 +2,40 @@ using UnityEngine;
 
 public class Mailbox : MonoBehaviour
 {
-    public ObjectiveManager objManager; // Reference to the ObjectiveManager script
-    public string endObjectiveID; // ID of the objective associated with delivering the box to the mailbox
+    private bool playerInRange = false; // Flag to track if the player is in range to interact with the mailbox
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            // Check if the player has the box
-            Box box = other.GetComponentInChildren<Box>();
-            if (box != null && box.HasBox())
+            // Player is in range to interact with the mailbox
+            playerInRange = true;
+            Debug.Log("Player in range to interact with the mailbox.");
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            // Player is no longer in range to interact with the mailbox
+            playerInRange = false;
+        }
+    }
+
+    private void Update()
+    {
+        // Check if the player is in range and presses the E key to interact with the mailbox
+        if (playerInRange && Input.GetKeyDown(KeyCode.E))
+        {
+            ObjectiveManager om = FindObjectOfType<ObjectiveManager>();
+            if (om != null)
             {
-                // Player has the box, trigger the completion of the objective
-                objManager.CompleteObjective(endObjectiveID);
-                // Optionally, destroy the box
-                box.DestroyBox();
+                om.CompleteObjective("Mail");
+            }
+            else
+            {
+                Debug.LogError("ObjectiveManager not found in the scene!");
             }
         }
     }
