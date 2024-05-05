@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.000055046083, g: 0.00014094963, b: 0.0042733354, a: 1}
+  m_IndirectSpecularColor: {r: 0.00006507212, g: 0.00014093838, b: 0.004272889, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -4969,6 +4969,7 @@ Transform:
   - {fileID: 1715414689}
   - {fileID: 1907610454}
   - {fileID: 1930175260}
+  - {fileID: 2114691674}
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -8024,6 +8025,37 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.8847053, y: 1.0550202, z: 0.8690036}
   m_Center: {x: -0.0000000035317833, y: 0.5275101, z: -0.11850698}
+--- !u!1 &274206863
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 274206864}
+  m_Layer: 0
+  m_Name: ATMRespawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &274206864
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 274206863}
+  m_LocalRotation: {x: 0, y: 0.9666002, z: -0, w: -0.25628912}
+  m_LocalPosition: {x: -1.29, y: -2.4583492, z: -0.27}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 590307445}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 209.7, z: 0}
 --- !u!1 &275173643
 GameObject:
   m_ObjectHideFlags: 0
@@ -18786,6 +18818,7 @@ Transform:
   - {fileID: 357305200}
   - {fileID: 1050230864}
   - {fileID: 179683387}
+  - {fileID: 274206864}
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: -90.525, z: 0}
@@ -48582,6 +48615,11 @@ Transform:
   m_Father: {fileID: 1869508319}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 30.844, z: 0}
+--- !u!4 &1451841480 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6877984581927144880, guid: 72b8e7030ae8bcd458233d4f73204f4b, type: 3}
+  m_PrefabInstance: {fileID: 475926947}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1455672593
 GameObject:
   m_ObjectHideFlags: 0
@@ -75910,6 +75948,37 @@ VideoPlayer:
   m_WaitForFirstFrame: 1
   m_FrameReadyEventEnabled: 0
   m_VideoShaders: []
+--- !u!1 &2060441393
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2060441394}
+  m_Layer: 0
+  m_Name: MailboxRespawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2060441394
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2060441393}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.9, y: 0, z: 8.82}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1451841480}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &2061338706
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -77537,6 +77606,37 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2112076070}
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &2114691673
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2114691674}
+  m_Layer: 0
+  m_Name: LaundromatRespawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2114691674
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2114691673}
+  m_LocalRotation: {x: -0, y: 0.24618495, z: -0, w: 0.9692229}
+  m_LocalPosition: {x: 9.13, y: 19.531185, z: 26.8}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 161332668}
+  m_RootOrder: 20
+  m_LocalEulerAnglesHint: {x: 0, y: 30.844, z: 0}
 --- !u!1 &2117851008
 GameObject:
   m_ObjectHideFlags: 0
