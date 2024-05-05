@@ -6,6 +6,9 @@ public class Box : MonoBehaviour
     private bool activated = false; // Flag to track if the box pickup has been activated
     private Rigidbody rb; // Rigidbody component of the box
 
+    [SerializeField]
+    private ObjectiveManager om;
+
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -17,7 +20,16 @@ public class Box : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E) && playerInRange && !activated)
         {
             activated = true;
-            PickUpBox();
+            if (om.StartObjective("Mail"))
+            {
+                PickUpBox();
+                
+            }
+            else
+            {
+                Debug.Log("Failed to start objective: Mail");
+                activated = false;
+            }
         }
     }
 
@@ -42,10 +54,9 @@ public class Box : MonoBehaviour
 
     private void PickUpBox()
     {
-        // Hide the box visually
-        gameObject.SetActive(false);
-        // Disable physics simulation for the box
-        rb.isKinematic = true;
+        // Destroy the box
+        Debug.Log("Start");
+        DestroyBox();
     }
 
     // Method to check if the player has the box
