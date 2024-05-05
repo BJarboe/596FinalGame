@@ -72,7 +72,7 @@ public class ObjectiveManager : MonoBehaviour
 
         if (objMail.status == Objective.Status.Completed)
         {
-            atm.text = "<s>drop off mail</s>";
+            mail.text = "<s>drop off mail</s>";
         }
 
         //if (objGrocery.status == Objective.Status.Completed)
