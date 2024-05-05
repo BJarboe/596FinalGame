@@ -1,3 +1,4 @@
+using Mono.Reflection;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.XR;
@@ -13,6 +14,10 @@ public class ATM : MonoBehaviour
     private bool activated = false;
     public GameObject cash;
     Rigidbody rb;
+    [SerializeField]
+    private TMPro.TextMeshProUGUI Instructions;
+    private enum status { OFF, ON, READY, DONE }
+    status state;
 
     private void Start()
     {
@@ -20,8 +25,7 @@ public class ATM : MonoBehaviour
         emmission.enabled = false;
         rb = cash.GetComponent<Rigidbody>();
         rb.detectCollisions = false;
-
-        //StartCoroutine(Withdrawal()); // for testing
+        state = status.OFF;
     }
     private void Update()
     {
@@ -31,7 +35,23 @@ public class ATM : MonoBehaviour
             if (obj.StartObjective("ATM"))
                 StartCoroutine(BeginWithdrawal());
             else { Debug.Log("ATM objective couldn't activate.."); activated = false;}
+        }
 
+        if (playerInRange)
+        {
+            switch (state) // Display instructions
+            {
+                case status.OFF:
+                    Instructions.text = "PRESS E TO INSERT DEBIT CARD";
+                    break;
+                case status.READY:
+                    Instructions.text = "PRESS E TO COMPLETE TRANSACTION";
+                    break;
+                case status.DONE:
+                case status.ON:
+                    Instructions.text = "";
+                    break;
+            }
         }
     }
 
@@ -49,16 +69,20 @@ public class ATM : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
             playerInRange = false;
+        Instructions.text = "";
     }
 
     IEnumerator BeginWithdrawal()
     {
+        state = status.ON;
         emmission.enabled = true;
         vid.Play();
         yield return new WaitForSeconds((float)vid.length - 4.2f);
         vid.Stop();
+        state = status.READY;
         yield return new WaitUntil(() => playerInRange && Input.GetKeyDown(KeyCode.E));
         obj.CompleteObjective("ATM");
+        state = status.DONE;
         StartCoroutine(Withdrawal());
     }
 

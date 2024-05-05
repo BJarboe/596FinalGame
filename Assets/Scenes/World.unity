@@ -11064,6 +11064,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   indicator: {fileID: 1641735099}
   vm: {fileID: 1480579071}
+  Instructions: {fileID: 1986819365}
   on_mat: {fileID: 2100000, guid: f05e1d0ceb2a47d458295ebd04f2fa7f, type: 2}
   off_mat: {fileID: 2100000, guid: 7f3f80774b7ff184f9c3c0f71263fe6e, type: 2}
   done_mat: {fileID: 2100000, guid: e3b97e612ed2ed84f96fea3ee519fed1, type: 2}
@@ -14471,6 +14472,7 @@ MonoBehaviour:
   emmission: {fileID: 357305201}
   playerInRange: 0
   cash: {fileID: 1050230860}
+  Instructions: {fileID: 1986819365}
 --- !u!1 &476224810
 GameObject:
   m_ObjectHideFlags: 0
@@ -58915,6 +58917,7 @@ MonoBehaviour:
   activateMarker: 0
   primeAudio: 0
   om: {fileID: 1485807000}
+  Instructions: {fileID: 1986819365}
 --- !u!65 &1745584836
 BoxCollider:
   m_ObjectHideFlags: 0
