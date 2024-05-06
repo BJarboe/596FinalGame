@@ -8034,6 +8034,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 274206864}
+  - component: {fileID: 274206865}
   m_Layer: 0
   m_Name: ATMRespawnPoint
   m_TagString: Untagged
@@ -8056,6 +8057,19 @@ Transform:
   m_Father: {fileID: 590307445}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 209.7, z: 0}
+--- !u!114 &274206865
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 274206863}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2444747a12e5cfc4f97a7a38792a9218, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ID: ATM
 --- !u!1 &275173643
 GameObject:
   m_ObjectHideFlags: 0
@@ -14538,7 +14552,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6877984581927144880, guid: 72b8e7030ae8bcd458233d4f73204f4b, type: 3}
       propertyPath: m_RootOrder
-      value: 15
+      value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 6877984581927144880, guid: 72b8e7030ae8bcd458233d4f73204f4b, type: 3}
       propertyPath: m_LocalPosition.x
@@ -47939,8 +47953,20 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1765680908993925260, guid: 714563eee87bdb544b4facf5ad00c67c, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1765680908993925260, guid: 714563eee87bdb544b4facf5ad00c67c, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1765680908993925260, guid: 714563eee87bdb544b4facf5ad00c67c, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1765680908993925260, guid: 714563eee87bdb544b4facf5ad00c67c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -446.9895
+      value: -476.3
       objectReference: {fileID: 0}
     - target: {fileID: 1765680908993925260, guid: 714563eee87bdb544b4facf5ad00c67c, type: 3}
       propertyPath: m_LocalPosition.y
@@ -47948,7 +47974,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1765680908993925260, guid: 714563eee87bdb544b4facf5ad00c67c, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 618.29175
+      value: 579.1
       objectReference: {fileID: 0}
     - target: {fileID: 1765680908993925260, guid: 714563eee87bdb544b4facf5ad00c67c, type: 3}
       propertyPath: m_LocalRotation.w
@@ -49485,7 +49511,7 @@ Transform:
   m_Children:
   - {fileID: 2055973239}
   m_Father: {fileID: 0}
-  m_RootOrder: 14
+  m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1483015913
 GameObject:
@@ -59559,7 +59585,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5240092819847202616, guid: 7fb8d29d49356b546849a3033540a420, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5240092819847202616, guid: 7fb8d29d49356b546849a3033540a420, type: 3}
       propertyPath: m_LocalPosition.x
@@ -76076,6 +76102,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2060441394}
+  - component: {fileID: 2060441395}
   m_Layer: 0
   m_Name: MailboxRespawnPoint
   m_TagString: Untagged
@@ -76098,6 +76125,19 @@ Transform:
   m_Father: {fileID: 1451841480}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2060441395
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2060441393}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2444747a12e5cfc4f97a7a38792a9218, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ID: Mail
 --- !u!1001 &2061338706
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -77734,6 +77774,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2114691674}
+  - component: {fileID: 2114691675}
   m_Layer: 0
   m_Name: LaundromatRespawnPoint
   m_TagString: Untagged
@@ -77756,6 +77797,19 @@ Transform:
   m_Father: {fileID: 161332668}
   m_RootOrder: 20
   m_LocalEulerAnglesHint: {x: 0, y: 30.844, z: 0}
+--- !u!114 &2114691675
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2114691673}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2444747a12e5cfc4f97a7a38792a9218, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ID: Laundromat
 --- !u!1 &2117851008
 GameObject:
   m_ObjectHideFlags: 0
@@ -79151,7 +79205,7 @@ Transform:
   - {fileID: 1148255994}
   - {fileID: 1553484785}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0.654, z: 0}
 --- !u!1 &6395090565695297724
 GameObject:
