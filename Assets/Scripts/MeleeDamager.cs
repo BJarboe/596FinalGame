@@ -38,13 +38,16 @@ public class MeleeDamager : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        //Play death cutscene
-        /* Method to play cutscene
-        vm.PlayCutscene( CUTSCENE-NUMBER );
-        yield return new WaitForSeconds( CUTSCENE-DURATION );
-        */
+        if (other.gameObject.tag == "Player")
+        {
+            //Play death cutscene
+            /* Method to play cutscene
+            vm.PlayCutscene( CUTSCENE-NUMBER );
+            yield return new WaitForSeconds( CUTSCENE-DURATION );
+            */
 
-        //reset player and enemy
-        player.Respawn();
+            //reset player and enemy
+            player.Respawn();
+        }
     }
 }
