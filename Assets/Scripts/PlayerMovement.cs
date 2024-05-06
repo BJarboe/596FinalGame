@@ -66,6 +66,9 @@ public class PlayerMovement : MonoBehaviour
     public GameObject staminaObject;
     public Image StaminaBar;
 
+    //Respawn point
+    private Vector3 respawnPoint;
+
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -417,5 +420,17 @@ public class PlayerMovement : MonoBehaviour
         }
 
         return true;  // Nothing is above, player can stand up
+    }
+
+    public void SetRespawnPoint(Vector3 respawnPoint)
+    {
+        Debug.Log("Set Respawn Point called");
+        this.respawnPoint = respawnPoint;
+    }
+
+    public void Respawn()
+    {
+        Debug.Log("Respawn called");
+        transform.position = respawnPoint;
     }
 }
