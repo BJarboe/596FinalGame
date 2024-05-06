@@ -71,9 +71,7 @@ public class SlidingDoor : MonoBehaviour
     IEnumerator SetBuffer()
     {
         buffer = true;
-        Debug.Log("Buffer ON");
         yield return new WaitForSeconds(7);
-        Debug.Log("Buffer OFF");
         buffer = false;
         yield return null;
     }
