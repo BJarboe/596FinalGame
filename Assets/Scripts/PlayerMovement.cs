@@ -67,7 +67,7 @@ public class PlayerMovement : MonoBehaviour
     public Image StaminaBar;
 
     //Respawn point
-    private Vector3 respawnPoint;
+    [SerializeField] private Vector3 respawnPoint;
 
     void Awake()
     {
