@@ -203,4 +203,9 @@ public class EnemyBehavior : MonoBehaviour, IHear
         Debug.Log("Respawn called");
         transform.position = respawnPoint;
     }
+
+    public void SetSightRange(float sightRange)
+    {
+       this.sightRange = sightRange;
+    }
 }
