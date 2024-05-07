@@ -44,8 +44,16 @@ public class ObjectiveManager : MonoBehaviour
     public TMPro.TextMeshProUGUI mail;
     public TMPro.TextMeshProUGUI grocery;
 
+    private EnemyBehavior enemy;
+    public Transform enemyFinalObjectiveSpawn;
+
     public DialogueManager dm;
     private bool atmDone = false;
+
+    private void Start()
+    {
+        enemy = GameObject.FindGameObjectWithTag("Enemy").GetComponent<EnemyBehavior>();
+    }
 
     public void Update()
     {
@@ -150,6 +158,12 @@ public class ObjectiveManager : MonoBehaviour
         {
             Debug.Log("All objectives complete, entering end-game..");
             // end-game stuff .....
+
+            //put enemy in run state
+            enemy.SetSightRange(1000);
+            //set spawn point behind player and respawn enemy there
+            enemy.SetRespawnPoint(enemyFinalObjectiveSpawn.position);
+            enemy.Respawn();
         }
     }
 }

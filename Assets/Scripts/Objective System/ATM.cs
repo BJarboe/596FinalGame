@@ -8,6 +8,7 @@ using UnityEngine.Video;
 public class ATM : MonoBehaviour
 {
     public ObjectiveManager obj;
+    private EnemyBehavior enemy;
     public Light emmission;
     VideoPlayer vid;
     public bool playerInRange = false;
@@ -26,6 +27,7 @@ public class ATM : MonoBehaviour
         rb = cash.GetComponent<Rigidbody>();
         rb.detectCollisions = false;
         state = status.OFF;
+        enemy = GameObject.FindGameObjectWithTag("Enemy").GetComponent<EnemyBehavior>();
     }
     private void Update()
     {
@@ -83,6 +85,7 @@ public class ATM : MonoBehaviour
         yield return new WaitUntil(() => playerInRange && Input.GetKeyDown(KeyCode.E));
         obj.CompleteObjective("ATM");
         state = status.DONE;
+        enemy.SetSightRange(enemy.GetSightRange() + 10);
         StartCoroutine(Withdrawal());
     }
 
