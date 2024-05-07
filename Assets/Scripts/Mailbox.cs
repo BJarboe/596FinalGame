@@ -2,10 +2,16 @@ using UnityEngine;
 
 public class Mailbox : MonoBehaviour
 {
+    private EnemyBehavior enemy;
     private bool playerInRange = false; // Flag to track if the player is in range to interact with the mailbox
     private bool activated = false; // Flag to track if the mailbox interaction has been activated
     [SerializeField]
     private TMPro.TextMeshProUGUI instructions;
+
+    private void Start()
+    {
+        enemy = GameObject.FindGameObjectWithTag("Enemy").GetComponent<EnemyBehavior>();
+    }
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
@@ -35,6 +41,7 @@ public class Mailbox : MonoBehaviour
             if (om != null)
             {
                 om.CompleteObjective("Mail");
+                enemy.SetSightRange(enemy.GetSightRange() + 10);
                 activated = true; // Set the activated flag to true to prevent duplicate interactions
                 instructions.text = "";
             }

@@ -208,4 +208,9 @@ public class EnemyBehavior : MonoBehaviour, IHear
     {
        this.sightRange = sightRange;
     }
+
+    public float GetSightRange()
+    {
+        return sightRange;
+    }
 }

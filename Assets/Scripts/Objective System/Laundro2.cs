@@ -5,6 +5,7 @@ using UnityEngine;
 public class Laundro2 : MonoBehaviour
 {
     public Laundromat lm;
+    private EnemyBehavior enemy;
 
     [SerializeField]
     private GameObject indicator;
@@ -51,6 +52,7 @@ public class Laundro2 : MonoBehaviour
         dryerSounds.time = 4;
         alarm.time = 9;
         state = status.OFF;
+        enemy = GameObject.FindGameObjectWithTag("Enemy").GetComponent<EnemyBehavior>();
     }
 
     private void Update()
@@ -111,6 +113,7 @@ public class Laundro2 : MonoBehaviour
         alarm.Stop();
         dryerSounds.Stop();
         state = status.DONE;
+        enemy.SetSightRange(enemy.GetSightRange() + 10);
         activateMarker = false;
     }
 
