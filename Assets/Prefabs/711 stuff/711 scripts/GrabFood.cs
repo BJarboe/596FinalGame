@@ -21,7 +21,7 @@ public class GrabFood : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E) && playerInRange)
         {
             Groceries.itemCount++;
-            Destroy(gameObject);
+            gameObject.SetActive(false);
             Groceries.instructions.text = "";
         }
     }

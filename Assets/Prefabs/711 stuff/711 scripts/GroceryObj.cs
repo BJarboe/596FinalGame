@@ -4,8 +4,15 @@ using UnityEngine;
 
 public class GroceryObj : MonoBehaviour
 {
+    //[SerializeField]
+    //private ObjectiveManager om;
     public int itemCount;
-    private long padding;
+    public int numItems;
+    public bool playerInRange;
+    public string prompt;
+
+    private enum Progress { INACTIVE, ACTIVE, CHECKOUT, PAYMENT, DONE}
+    private Progress progress;
 
     public TMPro.TextMeshProUGUI instructions;
 
@@ -22,18 +29,54 @@ public class GroceryObj : MonoBehaviour
     private void Start()
     {
         itemCount = 0;
-        padding = 0;
+        progress = Progress.INACTIVE;
+        playerInRange = false;
     }
 
     private void Update()
     {
-        if (padding > 2000)
+        if (progress == Progress.INACTIVE && itemCount > 0)
         {
-            Debug.Log($"Item Count = {itemCount}");
-            padding = 0;
+            progress = Progress.ACTIVE;
+            //om.StartObjective("Groceries");
+            Debug.Log("START");
         }
-        else
-            padding++;
+        
+        if (itemCount == numItems && progress == Progress.ACTIVE && playerInRange)
+        {
+            progress = Progress.CHECKOUT;
+            StartCoroutine(CheckOut());
+        }
+        if (progress == Progress.PAYMENT && playerInRange)
+            instructions.text = prompt;
+    }
+
+    IEnumerator CheckOut()
+    {
+        // Dialogue or something
+        yield return new WaitForSeconds(3);
+        progress = Progress.PAYMENT;
+        yield return new WaitUntil(() => playerInRange && Input.GetKeyDown(KeyCode.E)) ;
+        instructions.text = "";
+        progress = Progress.DONE;
+        //om.CompleteObjective("Groceries");
+        Debug.Log("COMPLETE");
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            playerInRange = true;
+        }
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            playerInRange = false;
+            instructions.text = "";
+        }
     }
 
 }
