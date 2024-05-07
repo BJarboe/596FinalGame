@@ -90,7 +90,7 @@ public class EnemyBehavior : MonoBehaviour, IHear
         Vector3 distanceToWalkPoint = transform.position - walkpoint;
 
         //Walkpoint reached
-        if (distanceToWalkPoint.magnitude < 1f)
+        if (distanceToWalkPoint.magnitude < 4f)
         {
             walkPointSet = false;
         }
@@ -102,7 +102,7 @@ public class EnemyBehavior : MonoBehaviour, IHear
         float randomZ = Random.Range(-walkPointRange, walkPointRange);
         float randomX = Random.Range(-walkPointRange, walkPointRange);
 
-        walkpoint = new Vector3(transform.position.x + randomX, transform.position.y, transform.position.z + randomZ);
+        walkpoint = new Vector3(transform.position.x + randomX, transform.position.y + 3, transform.position.z + randomZ);
 
         if (Physics.Raycast(walkpoint, -transform.up, 2f, whatIsGround))
         {
