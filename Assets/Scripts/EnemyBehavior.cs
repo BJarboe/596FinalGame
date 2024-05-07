@@ -19,6 +19,8 @@ public class EnemyBehavior : MonoBehaviour, IHear
     [SerializeField] private Vector3 walkpoint;
     [SerializeField] private bool walkPointSet;
     [SerializeField] private float walkPointRange;
+    [SerializeField] private float slowSpeed = 3f;
+    [SerializeField] private float fastSpeed = 5f;
 
     //Attacking
     [SerializeField] private float rotationSpeed = 7f;
@@ -73,7 +75,7 @@ public class EnemyBehavior : MonoBehaviour, IHear
     public void Patrolling()
     {
         anim.SetInteger("State", 0);
-        agent.speed = 3f;
+        agent.speed = slowSpeed;
 
         if (!walkPointSet)
         {
@@ -88,7 +90,7 @@ public class EnemyBehavior : MonoBehaviour, IHear
         Vector3 distanceToWalkPoint = transform.position - walkpoint;
 
         //Walkpoint reached
-        if (distanceToWalkPoint.magnitude < 1f)
+        if (distanceToWalkPoint.magnitude < 4f)
         {
             walkPointSet = false;
         }
@@ -100,7 +102,7 @@ public class EnemyBehavior : MonoBehaviour, IHear
         float randomZ = Random.Range(-walkPointRange, walkPointRange);
         float randomX = Random.Range(-walkPointRange, walkPointRange);
 
-        walkpoint = new Vector3(transform.position.x + randomX, transform.position.y, transform.position.z + randomZ);
+        walkpoint = new Vector3(transform.position.x + randomX, transform.position.y + 3, transform.position.z + randomZ);
 
         if (Physics.Raycast(walkpoint, -transform.up, 2f, whatIsGround))
         {
@@ -111,7 +113,7 @@ public class EnemyBehavior : MonoBehaviour, IHear
     public void ChasePlayer()
     {
         anim.SetInteger("State", 1);
-        agent.speed = 5f;
+        agent.speed = fastSpeed;
         agent.SetDestination(player.position);
     }
 
