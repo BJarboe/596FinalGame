@@ -48,6 +48,7 @@ public class MeleeDamager : MonoBehaviour
 
             //reset player and enemy
             player.Respawn();
+            enemy.Respawn();
         }
     }
 }

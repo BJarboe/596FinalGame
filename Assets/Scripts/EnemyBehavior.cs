@@ -32,7 +32,10 @@ public class EnemyBehavior : MonoBehaviour, IHear
     [SerializeField] private float sightRange, attackRange;
     [SerializeField] private bool playerInSightRange, playerInAttackRange;
 
-    
+    //Respawn point
+    [SerializeField] private Vector3 respawnPoint;
+
+
     private void Awake()
     {
         player = GameObject.Find("Player").transform;
@@ -187,5 +190,17 @@ public class EnemyBehavior : MonoBehaviour, IHear
     private void ResetAttack()
     {
         alreadyAttacked = false;
+    }
+
+    public void SetRespawnPoint(Vector3 respawnPoint)
+    {
+        Debug.Log("Set Respawn Point called");
+        this.respawnPoint = respawnPoint;
+    }
+
+    public void Respawn()
+    {
+        Debug.Log("Respawn called");
+        transform.position = respawnPoint;
     }
 }
