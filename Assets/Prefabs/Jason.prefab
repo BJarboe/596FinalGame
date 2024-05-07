@@ -780,7 +780,7 @@ Transform:
   m_GameObject: {fileID: 1426275222649424438}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -26.892, y: 0, z: 18.8}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalScale: {x: 2.15, y: 2.15, z: 2.15}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7219305646656471058}
@@ -853,7 +853,9 @@ MonoBehaviour:
     m_Bits: 8
   walkpoint: {x: 0, y: 0, z: 0}
   walkPointSet: 0
-  walkPointRange: 10
+  walkPointRange: 30
+  slowSpeed: 3
+  fastSpeed: 3.75
   rotationSpeed: 7
   timeBetweenAttacks: 0.4
   alreadyAttacked: 0
@@ -862,6 +864,7 @@ MonoBehaviour:
   attackRange: 2.15
   playerInSightRange: 0
   playerInAttackRange: 0
+  respawnPoint: {x: -466.8, y: 19, z: 596.8}
 --- !u!54 &1765680908993925250
 Rigidbody:
   m_ObjectHideFlags: 0
