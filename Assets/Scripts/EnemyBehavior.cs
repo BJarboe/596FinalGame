@@ -19,6 +19,8 @@ public class EnemyBehavior : MonoBehaviour, IHear
     [SerializeField] private Vector3 walkpoint;
     [SerializeField] private bool walkPointSet;
     [SerializeField] private float walkPointRange;
+    [SerializeField] private float slowSpeed = 3f;
+    [SerializeField] private float fastSpeed = 5f;
 
     //Attacking
     [SerializeField] private float rotationSpeed = 7f;
@@ -73,7 +75,7 @@ public class EnemyBehavior : MonoBehaviour, IHear
     public void Patrolling()
     {
         anim.SetInteger("State", 0);
-        agent.speed = 3f;
+        agent.speed = slowSpeed;
 
         if (!walkPointSet)
         {
@@ -111,7 +113,7 @@ public class EnemyBehavior : MonoBehaviour, IHear
     public void ChasePlayer()
     {
         anim.SetInteger("State", 1);
-        agent.speed = 5f;
+        agent.speed = fastSpeed;
         agent.SetDestination(player.position);
     }
 
