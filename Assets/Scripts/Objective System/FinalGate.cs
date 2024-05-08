@@ -20,16 +20,15 @@ public class FinalGate : MonoBehaviour
     [SerializeField]
     private GameObject marker;
     [SerializeField]
-    private TMPro.TextMeshProUGUI instructions;
-    public string prompt;
-    public enum s { INACTIVE, ACTIVE, DONE}
+    private VideoManager vM;
+
+
+    public enum s { INACTIVE, ACTIVE, DONE, TERMINATED}
     public s state;
-    private bool playerInRange;
 
     private void Start()
     {
         state = s.INACTIVE;
-        playerInRange = false;
     }
 
     private void Update()
@@ -40,16 +39,9 @@ public class FinalGate : MonoBehaviour
                 if (oM.final_objective_active)
                     state = s.ACTIVE;
                 break;
-
             case s.ACTIVE:
                 if (!marker.activeSelf)
                     marker.SetActive(true);
-                if (playerInRange && Input.GetKeyDown(KeyCode.E))
-                {
-                    state = s.DONE;
-                    instructions.text = "";
-                    marker.SetActive(false);
-                }
                 break;
 
             case s.DONE:
@@ -62,19 +54,19 @@ public class FinalGate : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            playerInRange = true;
-
             if (state == s.ACTIVE)
-                instructions.text = prompt;
+            {
+                state = s.DONE;
+                marker.SetActive(false);
+                StartCoroutine(EnterChase());
+            }
         }
     }
 
-    private void OnTriggerExit(Collider other)
+    IEnumerator EnterChase()
     {
-        if (other.CompareTag("Player"))
-        {
-            playerInRange = false;
-            instructions.text = "";
-        }
+        vM.PlayCutscene(6);
+        yield return new WaitForSeconds(10);
+        oM.FinalObjective();
     }
 }

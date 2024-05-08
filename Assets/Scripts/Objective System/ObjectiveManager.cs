@@ -30,6 +30,7 @@ public class ObjectiveManager : MonoBehaviour
     public bool final_objective_active = false;
     public int completed = 0;
     public int halfway_mark;
+    public int text_msg_threshold;
     
 
 
@@ -73,10 +74,7 @@ public class ObjectiveManager : MonoBehaviour
         if (objATM.status == Objective.Status.Completed)
         {
             atm.text = "<s>collect money from atm</s>";
-            if (atmDone == false)
-            {
-                StartCoroutine(dm.Scene4());
-            }
+            
             atmDone = true;
         }
 
@@ -93,7 +91,13 @@ public class ObjectiveManager : MonoBehaviour
 
         if (objGrocery.status == Objective.Status.Completed)
         {
-            atm.text = "<s>buy groceries</s>";
+            grocery.text = "<s>buy groceries</s>";
+        }
+
+        if (completed == text_msg_threshold)
+        {
+            StartCoroutine(dm.Scene4());
+            text_msg_threshold = -1;
         }
     }
     
@@ -157,26 +161,22 @@ public class ObjectiveManager : MonoBehaviour
                 return;
         }
         final_objective_active = true;
-        FinalObjective();
     }
 
     public void FinalObjective()
     {
-        if (final_objective_active)
-        {
-            Debug.Log("All objectives complete, entering end-game..");
-            // end-game stuff .....
+        Debug.Log("All objectives complete, entering end-game..");
+            
 
-            //put enemy in run state
-            enemy.SetSightRange(1000);
-            //set spawn point behind player and respawn enemy there
-            enemy.SetRespawnPoint(enemyFinalObjectiveSpawn.position);
-            enemy.Respawn();
+        //put enemy in run state
+        enemy.SetSightRange(1000);
+        //set spawn point behind player and respawn enemy there
+        enemy.SetRespawnPoint(enemyFinalObjectiveSpawn.position);
+        enemy.Respawn();
 
-            //Set respawn points for enemy and player
-            player.SetRespawnPoint(playerFinalObjectiveRespawn.position);
-            enemy.SetRespawnPoint(enemyFinalObjectiveRespawn.position);
+        //Set respawn points for enemy and player
+        player.SetRespawnPoint(playerFinalObjectiveRespawn.position);
+        enemy.SetRespawnPoint(enemyFinalObjectiveRespawn.position);
 
-        }
     }
 }

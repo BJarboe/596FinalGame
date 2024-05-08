@@ -42,7 +42,6 @@ public class VideoManager : MonoBehaviour
                 if (om.final_objective_active)
                 {
                     progress = Progress.FINISH;
-                    PlayCutscene(6);
                 }
                 break;
         }
