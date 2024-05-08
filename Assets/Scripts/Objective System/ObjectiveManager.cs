@@ -29,6 +29,7 @@ public class ObjectiveManager : MonoBehaviour
     private List<Objective> objectives = new List<Objective>();
     public bool final_objective_active = false;
     public int completed = 0;
+    public int halfway_mark;
 
     public static ObjectiveManager Instance { get; private set; } // Singleton instance 
     private void Awake()
@@ -59,8 +60,8 @@ public class ObjectiveManager : MonoBehaviour
     {
         Objective objATM = GetObjective("ATM");
         Objective objLaundry = GetObjective("Laundromat");
-        Objective objMail = GetObjective("Mail"); // ID for mail
-        //Objective objGrocery = GetObjective("Grocery"); // ID for grocery
+        Objective objMail = GetObjective("Mail"); 
+        Objective objGrocery = GetObjective("Groceries"); 
 
         if (objATM.status == Objective.Status.Completed)
         {
@@ -83,10 +84,10 @@ public class ObjectiveManager : MonoBehaviour
             mail.text = "<s>drop off mail</s>";
         }
 
-        //if (objGrocery.status == Objective.Status.Completed)
-        //{
-        //    atm.text = "<s>buy groceries</s>";
-        //}
+        if (objGrocery.status == Objective.Status.Completed)
+        {
+            atm.text = "<s>buy groceries</s>";
+        }
     }
     
     public Objective GetObjective(string name)
