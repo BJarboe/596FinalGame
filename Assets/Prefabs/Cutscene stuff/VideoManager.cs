@@ -12,6 +12,7 @@ public class VideoManager : MonoBehaviour
     public string movementScript;
     public Canvas ui;
     private enum Progress { START, HALFWAY, FINISH, TERMINATED}
+    [SerializeField]
     private Progress progress;
 
     [SerializeField]
@@ -32,6 +33,11 @@ public class VideoManager : MonoBehaviour
         {
             progress = Progress.HALFWAY;
             PlayCutscene(5);
+        }
+        if (progress == Progress.HALFWAY && om.final_objective_active)
+        {
+            progress = Progress.FINISH;
+            PlayCutscene(6);
         }
     }
 
