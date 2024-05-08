@@ -11,6 +11,9 @@ public class EnemyBehavior : MonoBehaviour, IHear
     [SerializeField] private Transform player;
     [SerializeField] private LayerMask whatIsGround, whatIsPlayer;
 
+    [SerializeField]
+    private bool blind;
+
     private Vector3 soundWalkpoint;
 
     //Sound Response
@@ -46,6 +49,8 @@ public class EnemyBehavior : MonoBehaviour, IHear
     void Start()
     {
         anim = GetComponent<Animator>();
+        if (blind)
+            sightRange = 0;
     }
 
     // Update is called once per frame
