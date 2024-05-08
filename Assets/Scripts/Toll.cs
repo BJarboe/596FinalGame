@@ -5,33 +5,54 @@ using UnityEngine;
 public class Toll : MonoBehaviour
 {
     public GameObject invisibleWall;
-    private ObjectiveManager objectiveManager;
-    [SerializeField]
-    private TMPro.TextMeshProUGUI instructions;
+    [SerializeField] private ObjectiveManager objectiveManager;
+    public TMPro.TextMeshProUGUI instructions;
+    public FinalMarker finalMarker;
     private bool playerInRange = false;
-    public AudioSource p;
 
-    // Start is called before the first frame update
     void Start()
     {
         // Find the ObjectiveManager script in the scene
         objectiveManager = FindObjectOfType<ObjectiveManager>();
+
+        // Ensure finalMarker is properly assigned
+        if (finalMarker == null)
+        {
+            Debug.LogError("FinalMarker is not assigned in the inspector!");
+        }
     }
 
-    // Update is called once per frame
     void Update()
     {
         // Check if the ObjectiveManager is found and the final objective is active
         if (objectiveManager.final_objective_active)
         {
+            // Check if finalMarker is not null before accessing it
+            if (finalMarker != null)
+            {
+                // Activate the marker with a delay when the final objective is active
+                StartCoroutine(finalMarker.ActivateMarkerWithDelay(14f)); // Delay for 5 seconds
+            }
 
             // Check if the "E" key is pressed
-            if (Input.GetKeyDown(KeyCode.E) && playerInRange)
+            if (Input.GetKeyDown(KeyCode.E))
             {
-                if (playerInRange)
-                    instructions.text = "PRESS E TO ACTIVATE";
+                // Check if finalMarker is not null before accessing it
+                if (finalMarker != null)
+                {
+                    // Deactivate the marker when "E" is pressed
+                    finalMarker.DeactivateMarker();
+                }
 
-                instructions.text = "";
+                if (playerInRange)
+                {
+                    instructions.text = "PRESS E TO ACTIVATE";
+                }
+                else
+                {
+                    instructions.text = "";
+                }
+
                 // Check if the invisible wall reference is not null
                 if (invisibleWall != null)
                 {
@@ -41,4 +62,6 @@ public class Toll : MonoBehaviour
             }
         }
     }
+
+    // You may need to implement OnTriggerEnter and OnTriggerExit to handle playerInRange
 }
