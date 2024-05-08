@@ -29,15 +29,22 @@ public class VideoManager : MonoBehaviour
     }
     private void Update()
     {
-        if (om.completed == om.halfway_mark && progress == Progress.START)
+        switch (progress)
         {
-            progress = Progress.HALFWAY;
-            PlayCutscene(5);
-        }
-        if (progress == Progress.HALFWAY && om.final_objective_active)
-        {
-            progress = Progress.FINISH;
-            PlayCutscene(6);
+            case Progress.START:
+                if (om.completed == om.halfway_mark)
+                {
+                    progress = Progress.HALFWAY;
+                    PlayCutscene(5);
+                }
+                break;
+            case Progress.HALFWAY:
+                if (om.final_objective_active)
+                {
+                    progress = Progress.FINISH;
+                    PlayCutscene(6);
+                }
+                break;
         }
     }
 
