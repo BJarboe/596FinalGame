@@ -30,6 +30,7 @@ public class ObjectiveManager : MonoBehaviour
     public bool final_objective_active = false;
     public int completed = 0;
     public int halfway_mark;
+    public int text_msg_threshold;
     
 
 
@@ -73,10 +74,7 @@ public class ObjectiveManager : MonoBehaviour
         if (objATM.status == Objective.Status.Completed)
         {
             atm.text = "<s>collect money from atm</s>";
-            if (atmDone == false)
-            {
-                StartCoroutine(dm.Scene4());
-            }
+            
             atmDone = true;
         }
 
@@ -93,7 +91,13 @@ public class ObjectiveManager : MonoBehaviour
 
         if (objGrocery.status == Objective.Status.Completed)
         {
-            atm.text = "<s>buy groceries</s>";
+            grocery.text = "<s>buy groceries</s>";
+        }
+
+        if (completed == text_msg_threshold)
+        {
+            StartCoroutine(dm.Scene4());
+            text_msg_threshold = -1;
         }
     }
     
