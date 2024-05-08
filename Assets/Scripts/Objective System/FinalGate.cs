@@ -19,17 +19,14 @@ public class FinalGate : MonoBehaviour
     private GameObject barrier;
     [SerializeField]
     private GameObject marker;
-    [SerializeField]
-    private TMPro.TextMeshProUGUI instructions;
-    public string prompt;
-    public enum s { INACTIVE, ACTIVE, DONE}
+
+
+    public enum s { INACTIVE, ACTIVE, DONE, TERMINATED}
     public s state;
-    private bool playerInRange;
 
     private void Start()
     {
         state = s.INACTIVE;
-        playerInRange = false;
     }
 
     private void Update()
@@ -41,16 +38,6 @@ public class FinalGate : MonoBehaviour
                     state = s.ACTIVE;
                 break;
 
-            case s.ACTIVE:
-                if (!marker.activeSelf)
-                    marker.SetActive(true);
-                if (playerInRange && Input.GetKeyDown(KeyCode.E))
-                {
-                    state = s.DONE;
-                    instructions.text = "";
-                    marker.SetActive(false);
-                }
-                break;
 
             case s.DONE:
                 if (barrier.activeSelf)
@@ -62,19 +49,14 @@ public class FinalGate : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            playerInRange = true;
-
             if (state == s.ACTIVE)
-                instructions.text = prompt;
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            playerInRange = false;
-            instructions.text = "";
+            {
+                if (!marker.activeSelf)
+                    marker.SetActive(true);
+                
+                state = s.DONE;
+                marker.SetActive(false);
+            }
         }
     }
 }
