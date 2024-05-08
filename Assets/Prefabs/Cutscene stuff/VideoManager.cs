@@ -11,9 +11,29 @@ public class VideoManager : MonoBehaviour
     public GameObject player;
     public string movementScript;
     public Canvas ui;
+    private enum Progress { START, HALFWAY, FINISH, TERMINATED}
+    private Progress progress;
+
+    [SerializeField]
+    private ObjectiveManager om;
+
     public static VideoManager Instance { get; private set; } // Singleton Instance
-
-
+    private void Awake()
+    {
+        progress = Progress.START;
+        if (Instance == null)
+            Instance = this;
+        else
+            Destroy(gameObject);
+    }
+    private void Update()
+    {
+        if (om.completed == om.halfway_mark && progress == Progress.START)
+        {
+            progress = Progress.HALFWAY;
+            PlayCutscene(5);
+        }
+    }
 
     public void PlayCutscene(int num) { StartCoroutine(PlayVid(cutscenes[num]));}
 

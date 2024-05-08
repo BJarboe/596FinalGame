@@ -38,6 +38,9 @@ public class EnemyBehavior : MonoBehaviour, IHear
     //Respawn point
     [SerializeField] private Vector3 respawnPoint;
 
+    [SerializeField] private bool chaseAudioPlaying;
+    [SerializeField] private AudioSource audioSrc;
+
 
     private void Awake()
     {
@@ -48,6 +51,7 @@ public class EnemyBehavior : MonoBehaviour, IHear
     // Start is called before the first frame update
     void Start()
     {
+        chaseAudioPlaying = false;
         anim = GetComponent<Animator>();
         if (blind)
             sightRange = 0;
@@ -84,6 +88,13 @@ public class EnemyBehavior : MonoBehaviour, IHear
     {
         anim.SetInteger("State", 0);
         agent.speed = slowSpeed;
+
+        if (chaseAudioPlaying)
+        {
+            audioSrc.Stop();
+            chaseAudioPlaying = false;
+        }
+            
 
         if (!walkPointSet)
         {
@@ -123,6 +134,12 @@ public class EnemyBehavior : MonoBehaviour, IHear
         anim.SetInteger("State", 1);
         agent.speed = fastSpeed;
         agent.SetDestination(player.position);
+
+        if (!chaseAudioPlaying)
+        {
+            chaseAudioPlaying = true;
+            audioSrc.Play();
+        }
     }
 
     public void AttackPlayer()
