@@ -19,6 +19,8 @@ public class FinalGate : MonoBehaviour
     private GameObject barrier;
     [SerializeField]
     private GameObject marker;
+    [SerializeField]
+    private VideoManager vM;
 
 
     public enum s { INACTIVE, ACTIVE, DONE, TERMINATED}
@@ -37,7 +39,10 @@ public class FinalGate : MonoBehaviour
                 if (oM.final_objective_active)
                     state = s.ACTIVE;
                 break;
-
+            case s.ACTIVE:
+                if (!marker.activeSelf)
+                    marker.SetActive(true);
+                break;
 
             case s.DONE:
                 if (barrier.activeSelf)
@@ -51,12 +56,17 @@ public class FinalGate : MonoBehaviour
         {
             if (state == s.ACTIVE)
             {
-                if (!marker.activeSelf)
-                    marker.SetActive(true);
-                
                 state = s.DONE;
                 marker.SetActive(false);
+                StartCoroutine(EnterChase());
             }
         }
+    }
+
+    IEnumerator EnterChase()
+    {
+        vM.PlayCutscene(6);
+        yield return new WaitForSeconds(10);
+        oM.FinalObjective();
     }
 }

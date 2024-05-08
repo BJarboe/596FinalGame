@@ -161,26 +161,22 @@ public class ObjectiveManager : MonoBehaviour
                 return;
         }
         final_objective_active = true;
-        FinalObjective();
     }
 
     public void FinalObjective()
     {
-        if (final_objective_active)
-        {
-            Debug.Log("All objectives complete, entering end-game..");
-            // end-game stuff .....
+        Debug.Log("All objectives complete, entering end-game..");
+            
 
-            //put enemy in run state
-            enemy.SetSightRange(1000);
-            //set spawn point behind player and respawn enemy there
-            enemy.SetRespawnPoint(enemyFinalObjectiveSpawn.position);
-            enemy.Respawn();
+        //put enemy in run state
+        enemy.SetSightRange(1000);
+        //set spawn point behind player and respawn enemy there
+        enemy.SetRespawnPoint(enemyFinalObjectiveSpawn.position);
+        enemy.Respawn();
 
-            //Set respawn points for enemy and player
-            player.SetRespawnPoint(playerFinalObjectiveRespawn.position);
-            enemy.SetRespawnPoint(enemyFinalObjectiveRespawn.position);
+        //Set respawn points for enemy and player
+        player.SetRespawnPoint(playerFinalObjectiveRespawn.position);
+        enemy.SetRespawnPoint(enemyFinalObjectiveRespawn.position);
 
-        }
     }
 }
