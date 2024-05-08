@@ -49,6 +49,10 @@ public class ObjectiveManager : MonoBehaviour
 
     private EnemyBehavior enemy;
     public Transform enemyFinalObjectiveSpawn;
+    public Transform enemyFinalObjectiveRespawn;
+
+    public PlayerMovement player;
+    public Transform playerFinalObjectiveRespawn;
 
     public DialogueManager dm;
     private bool atmDone = false;
@@ -56,6 +60,7 @@ public class ObjectiveManager : MonoBehaviour
     private void Start()
     {
         enemy = GameObject.FindGameObjectWithTag("Enemy").GetComponent<EnemyBehavior>();
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
     }
 
     public void Update()
@@ -167,6 +172,10 @@ public class ObjectiveManager : MonoBehaviour
             //set spawn point behind player and respawn enemy there
             enemy.SetRespawnPoint(enemyFinalObjectiveSpawn.position);
             enemy.Respawn();
+
+            //Set respawn points for enemy and player
+            player.SetRespawnPoint(playerFinalObjectiveRespawn.position);
+            enemy.SetRespawnPoint(enemyFinalObjectiveRespawn.position);
 
         }
     }
