@@ -5,6 +5,7 @@ public class Box : MonoBehaviour
     private bool playerInRange = false; // Flag to track if the player is in range to pick up the box
     private bool activated = false; // Flag to track if the box pickup has been activated
     private Rigidbody rb; // Rigidbody component of the box
+    public AudioSource p;
 
     [SerializeField]
     private TMPro.TextMeshProUGUI instructions;
@@ -23,6 +24,7 @@ public class Box : MonoBehaviour
         // Check for player input to pick up the box
         if (Input.GetKeyDown(KeyCode.E) && playerInRange && !activated)
         {
+            p.Play();
             activated = true;
             if (om.StartObjective("Mail"))
             {
@@ -36,7 +38,7 @@ public class Box : MonoBehaviour
             }
         }
         if (playerInRange)
-            instructions.text = "PICK UP PACKAGE";
+            instructions.text = "PRESS E TO PICKUP PACKAGE";
     }
 
     private void OnTriggerEnter(Collider other)
@@ -63,6 +65,7 @@ public class Box : MonoBehaviour
     {
         // Destroy the box
         Debug.Log("Start");
+        
         DestroyBox();
     }
 

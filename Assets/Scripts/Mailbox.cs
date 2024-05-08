@@ -7,6 +7,7 @@ public class Mailbox : MonoBehaviour
     private bool activated = false; // Flag to track if the mailbox interaction has been activated
     [SerializeField]
     private TMPro.TextMeshProUGUI instructions;
+    public AudioSource p;
 
     private void Start()
     {
@@ -37,6 +38,7 @@ public class Mailbox : MonoBehaviour
         // Check if the player is in range and presses the E key to interact with the mailbox
         if (playerInRange && Input.GetKeyDown(KeyCode.E) && !activated)
         {
+            p.Play();
             ObjectiveManager om = FindObjectOfType<ObjectiveManager>();
             if (om != null)
             {
@@ -52,6 +54,6 @@ public class Mailbox : MonoBehaviour
         }
 
         if (playerInRange && !activated)
-            instructions.text = "DROP OFF MAIL";
+            instructions.text = "   PRESS E TO DROP OFF MAIL";
     }
 }

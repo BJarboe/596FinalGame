@@ -30,6 +30,8 @@ public class ObjectiveManager : MonoBehaviour
     public bool final_objective_active = false;
     public int completed = 0;
     public int halfway_mark;
+    
+
 
     public static ObjectiveManager Instance { get; private set; } // Singleton instance 
     private void Awake()
@@ -165,6 +167,7 @@ public class ObjectiveManager : MonoBehaviour
             //set spawn point behind player and respawn enemy there
             enemy.SetRespawnPoint(enemyFinalObjectiveSpawn.position);
             enemy.Respawn();
+
         }
     }
 }
