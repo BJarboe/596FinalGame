@@ -33,7 +33,7 @@ public class EnemyBehavior : MonoBehaviour, IHear
 
     //States
     [SerializeField] private float sightRange, attackRange;
-    [SerializeField] private bool playerInSightRange, playerInAttackRange;
+    [SerializeField] public bool playerInSightRange, playerInAttackRange;
 
     //Respawn point
     [SerializeField] private Vector3 respawnPoint;

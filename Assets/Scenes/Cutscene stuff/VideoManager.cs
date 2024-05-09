@@ -11,9 +11,13 @@ public class VideoManager : MonoBehaviour
     public GameObject player;
     public string movementScript;
     public Canvas ui;
+    public bool freezeJason;
     private enum Progress { START, HALFWAY, FINISH, TERMINATED}
     [SerializeField]
     private Progress progress;
+
+    [SerializeField]
+    private EnemyBehavior jason;
 
     [SerializeField]
     private ObjectiveManager om;
@@ -22,6 +26,7 @@ public class VideoManager : MonoBehaviour
     private void Awake()
     {
         progress = Progress.START;
+        freezeJason = false;
         if (Instance == null)
             Instance = this;
         else
@@ -45,12 +50,20 @@ public class VideoManager : MonoBehaviour
                 }
                 break;
         }
+
+        if (freezeJason)
+        {
+            jason.playerInAttackRange = false;
+            jason.playerInSightRange = false;
+            jason.Patrolling();
+        }
     }
 
     public void PlayCutscene(int num) { StartCoroutine(PlayVid(cutscenes[num]));}
 
     IEnumerator PlayVid(VideoPlayer vidplayer)
     {
+        freezeJason = true;
         yield return new WaitForSeconds(2);
         ui.enabled = false;
         (player.GetComponent(movementScript) as MonoBehaviour).enabled = false;
@@ -60,5 +73,6 @@ public class VideoManager : MonoBehaviour
         (player.GetComponent(movementScript) as MonoBehaviour).enabled = true;
         vidplayer.Stop();
         ui.enabled = true;
+        freezeJason = false;
     }
 }
