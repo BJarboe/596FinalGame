@@ -48,6 +48,8 @@ public class FinalVideo : MonoBehaviour
         yield return new WaitForSeconds(1); // padding for condition check
         yield return new WaitUntil(() => !credits.isPlaying);
         credits.Stop();
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
         SceneManager.LoadScene("MainMenu");
     }
 }
