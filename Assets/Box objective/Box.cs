@@ -24,6 +24,7 @@ public class Box : MonoBehaviour
         // Check for player input to pick up the box
         if (Input.GetKeyDown(KeyCode.E) && playerInRange && !activated)
         {
+            instructions.text = "";
             p.Play();
             activated = true;
             if (om.StartObjective("Mail"))
@@ -37,8 +38,7 @@ public class Box : MonoBehaviour
                 activated = false;
             }
         }
-        if (playerInRange)
-            instructions.text = "PRESS E TO PICKUP PACKAGE";
+            
     }
 
     private void OnTriggerEnter(Collider other)
@@ -48,6 +48,7 @@ public class Box : MonoBehaviour
             // Player is in range to pick up the box
             playerInRange = true;
             Debug.Log("Player in range to pick up the box.");
+            instructions.text = "PRESS E TO PICKUP PACKAGE";
         }
     }
 
