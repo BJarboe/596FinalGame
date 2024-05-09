@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.Video;
 
 public class FinalVideo : MonoBehaviour
@@ -33,8 +34,10 @@ public class FinalVideo : MonoBehaviour
         yield return new WaitUntil(() => !finalScene.isPlaying);
         finalScene.Stop();
         yield return new WaitForSeconds(transition);
-        Debug.Log("STARTING CREDITS");
-        StartCoroutine(PlayCredits());
+
+        // MOVE
+        SceneManager.LoadScene("MainMenu");
+        //StartCoroutine(PlayCredits());
     }
 
     IEnumerator PlayCredits()

@@ -80,6 +80,8 @@ public class PlayerMovement : MonoBehaviour
     public AudioSource breathingAudioSource;
     public AudioClip staminaRecoverySound;
 
+    public int deathCount;
+
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -91,6 +93,7 @@ public class PlayerMovement : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         currentStamina = stamina;
+        deathCount = 0;
     }
 
     private void FixedUpdate()
@@ -462,6 +465,7 @@ public class PlayerMovement : MonoBehaviour
     public void Respawn()
     {
         Debug.Log("Respawn called");
+        deathCount++;
         transform.position = respawnPoint;
     }
 }
