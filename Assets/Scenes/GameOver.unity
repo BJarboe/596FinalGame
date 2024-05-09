@@ -317,6 +317,7 @@ MonoBehaviour:
   credits: {fileID: 1978280328}
   loadDelay: 3
   transition: 2
+  victory: 1
 --- !u!4 &846382262
 Transform:
   m_ObjectHideFlags: 0
