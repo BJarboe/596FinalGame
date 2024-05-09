@@ -35,9 +35,8 @@ public class FinalVideo : MonoBehaviour
         finalScene.Stop();
         yield return new WaitForSeconds(transition);
 
-        // MOVE
-        SceneManager.LoadScene("MainMenu");
-        //StartCoroutine(PlayCredits());
+        
+        StartCoroutine(PlayCredits());
     }
 
     IEnumerator PlayCredits()
@@ -46,5 +45,6 @@ public class FinalVideo : MonoBehaviour
         yield return new WaitForSeconds(1); // padding for condition check
         yield return new WaitUntil(() => !credits.isPlaying);
         credits.Stop();
+        SceneManager.LoadScene("MainMenu");
     }
 }
