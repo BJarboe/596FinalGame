@@ -69,6 +69,17 @@ public class PlayerMovement : MonoBehaviour
     //Respawn point
     [SerializeField] private Vector3 respawnPoint;
 
+
+    // Audio
+    public AudioSource footstepAudioSource;
+    public AudioClip[] footstepSounds;  //Array of footstep sounds
+    public float footstepSprintingDelay = 0.35f;
+    public float footstepWalkingDelay = 0.50f; // Delay between footsteps
+    private float lastFootstepTime = 0;  // Last time a footstep sound was played
+
+    public AudioSource breathingAudioSource;
+    public AudioClip staminaRecoverySound;
+
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -126,10 +137,16 @@ public class PlayerMovement : MonoBehaviour
         {
             staminaObject.SetActive(true);
             StaminaBar.fillAmount = currentStamina / stamina;
+            if (!breathingAudioSource.isPlaying)
+            {
+                breathingAudioSource.loop = true;
+                breathingAudioSource.Play();
+            }
         }
         else
         {
             staminaObject.SetActive(false);
+            breathingAudioSource.Stop();
         }
     }
 
@@ -245,6 +262,7 @@ public class PlayerMovement : MonoBehaviour
             //Apply forces to move player
             rb.AddForce(orientation.transform.forward * y * sprintSpeed * Time.deltaTime * multiplier * multiplierV);
             rb.AddForce(orientation.transform.right * x * sprintSpeed * Time.deltaTime * multiplier);
+            PlayFootsteps(footstepSprintingDelay);
         }
         else if (crouching)
         {
@@ -257,6 +275,19 @@ public class PlayerMovement : MonoBehaviour
             //Apply forces to move player
             rb.AddForce(orientation.transform.forward * y * walkSpeed * multiplier * multiplierV);
             rb.AddForce(orientation.transform.right * x * walkSpeed * multiplier);
+            PlayFootsteps(footstepWalkingDelay);
+        }
+    }
+
+    private void PlayFootsteps(float footstepDelay)
+    {
+        // Check if the player is grounded, moving, and enough time has passed since the last footstep
+        if (grounded && rb.velocity.magnitude > 0.5f && Time.time - lastFootstepTime > footstepDelay)
+        {
+            // Play a random footstep sound from the array
+            AudioClip clip = footstepSounds[UnityEngine.Random.Range(0, footstepSounds.Length)];
+            footstepAudioSource.PlayOneShot(clip);
+            lastFootstepTime = Time.time;  // Update the last footstep time
         }
     }
 

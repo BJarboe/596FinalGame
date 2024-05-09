@@ -25448,6 +25448,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Jason
       objectReference: {fileID: 0}
+    - target: {fileID: 1426275222649424438, guid: 714563eee87bdb544b4facf5ad00c67c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1765680908993925251, guid: 714563eee87bdb544b4facf5ad00c67c, type: 3}
       propertyPath: sightRange
       value: 20
@@ -73261,10 +73265,16 @@ MonoBehaviour:
   objectives: []
   final_objective_active: 0
   completed: 0
+  halfway_mark: 0
+  text_msg_threshold: 0
   atm: {fileID: 841465073}
   laundry: {fileID: 1751889848}
   mail: {fileID: 823201648}
   grocery: {fileID: 883367894}
+  enemyFinalObjectiveSpawn: {fileID: 0}
+  enemyFinalObjectiveRespawn: {fileID: 0}
+  player: {fileID: 0}
+  playerFinalObjectiveRespawn: {fileID: 0}
   dm: {fileID: 0}
 --- !u!4 &1464024463
 Transform:
@@ -77118,10 +77128,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 736ea99c48429654bbce80ed28742396, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  om: {fileID: 0}
   itemCount: 0
   numItems: 6
   playerInRange: 0
   prompt: PRESS E TO LEAVE $0.00 TIP
+  screen: {fileID: 0}
+  NameObject: {fileID: 0}
+  TextBoxObject: {fileID: 0}
+  Name: {fileID: 0}
+  TextBox: {fileID: 0}
+  Click: {fileID: 0}
   instructions: {fileID: 1807165950}
 --- !u!65 &1537473493
 BoxCollider:
@@ -115352,18 +115369,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 3538131662942587328, guid: 7fb8d29d49356b546849a3033540a420, type: 3}
-      propertyPath: respawnPoint.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3538131662942587328, guid: 7fb8d29d49356b546849a3033540a420, type: 3}
-      propertyPath: respawnPoint.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3538131662942587328, guid: 7fb8d29d49356b546849a3033540a420, type: 3}
-      propertyPath: respawnPoint.z
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 5240092819847202616, guid: 7fb8d29d49356b546849a3033540a420, type: 3}
       propertyPath: m_RootOrder
       value: 2
