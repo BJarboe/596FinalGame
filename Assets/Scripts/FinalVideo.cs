@@ -11,6 +11,7 @@ public class FinalVideo : MonoBehaviour
 
     public float loadDelay;
     public float transition;
+    public bool victory;
 
     public static FinalVideo Instance { get; private set; } // Singleton Instance
     private void Awake()
@@ -35,8 +36,10 @@ public class FinalVideo : MonoBehaviour
         finalScene.Stop();
         yield return new WaitForSeconds(transition);
 
-        
-        StartCoroutine(PlayCredits());
+        if (victory)
+            StartCoroutine(PlayCredits());
+        else
+            SceneManager.LoadScene("MainMenu");
     }
 
     IEnumerator PlayCredits()
