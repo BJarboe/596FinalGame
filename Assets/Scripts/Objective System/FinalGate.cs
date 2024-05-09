@@ -21,10 +21,12 @@ public class FinalGate : MonoBehaviour
     private GameObject marker;
     [SerializeField]
     private VideoManager vM;
-
+    [SerializeField]
+    private GameObject gate;
 
     public enum s { INACTIVE, ACTIVE, DONE, TERMINATED}
     public s state;
+    public float gateRotation;
 
     private void Start()
     {
@@ -67,6 +69,21 @@ public class FinalGate : MonoBehaviour
     {
         vM.PlayCutscene(6);
         yield return new WaitForSeconds(10);
+        StartCoroutine(OpenGate());
         oM.FinalObjective();
+    }
+
+    IEnumerator OpenGate()
+    {
+        Debug.Log("GATE OPENING..");
+        yield return new WaitForSeconds(2);
+        float speed = -20f;
+        float time = 0;
+        while (time < gateRotation)
+        {
+            gate.transform.Rotate(0, 0, speed * Time.deltaTime);
+            time += Time.deltaTime;
+            yield return null;
+        }
     }
 }
