@@ -170,6 +170,9 @@ public class ObjectiveManager : MonoBehaviour
 
         //put enemy in run state
         enemy.SetSightRange(1000);
+
+        //increase enemy speed
+        enemy.SetFastSpeed(enemy.GetFastSpeed() + 1.5f);
         //set spawn point behind player and respawn enemy there
         enemy.SetRespawnPoint(enemyFinalObjectiveSpawn.position);
         enemy.Respawn();
