@@ -79,6 +79,7 @@ public class Box : MonoBehaviour
     // Method to destroy the box
     public void DestroyBox()
     {
+        instructions.text = "";
         Destroy(gameObject);
         
     }
