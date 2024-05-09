@@ -43,7 +43,7 @@ public class Mailbox : MonoBehaviour
             if (om != null)
             {
                 om.CompleteObjective("Mail");
-                enemy.SetSightRange(enemy.GetSightRange() + 10);
+                enemy.SetSightRange(enemy.GetSightRange() + 12);
                 activated = true; // Set the activated flag to true to prevent duplicate interactions
                 instructions.text = "";
             }

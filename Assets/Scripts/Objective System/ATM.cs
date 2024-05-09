@@ -85,7 +85,7 @@ public class ATM : MonoBehaviour
         yield return new WaitUntil(() => playerInRange && Input.GetKeyDown(KeyCode.E));
         obj.CompleteObjective("ATM");
         state = status.DONE;
-        enemy.SetSightRange(enemy.GetSightRange() + 10);
+        enemy.SetSightRange(enemy.GetSightRange() + 12);
         StartCoroutine(Withdrawal());
     }
 

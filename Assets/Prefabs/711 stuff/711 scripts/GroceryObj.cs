@@ -7,6 +7,7 @@ public class GroceryObj : MonoBehaviour
 {
     [SerializeField]
     private ObjectiveManager om;
+    private EnemyBehavior enemy;
     public int itemCount;
     public int numItems;
     public bool playerInRange;
@@ -41,6 +42,7 @@ public class GroceryObj : MonoBehaviour
         progress = Progress.INACTIVE;
         playerInRange = false;
         screen.SetActive(false);
+        enemy = GameObject.FindGameObjectWithTag("Enemy").GetComponent<EnemyBehavior>();
     }
 
     private void Update()
@@ -92,6 +94,7 @@ public class GroceryObj : MonoBehaviour
         instructions.text = "";
         TextBox.text = "I wouldn't be out for too much longer...";
         progress = Progress.DONE;
+        enemy.SetSightRange(enemy.GetSightRange() + 12);
         om.CompleteObjective("Groceries");
         Debug.Log("COMPLETE");
 

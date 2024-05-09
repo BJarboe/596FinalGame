@@ -113,7 +113,7 @@ public class Laundro2 : MonoBehaviour
         alarm.Stop();
         dryerSounds.Stop();
         state = status.DONE;
-        enemy.SetSightRange(enemy.GetSightRange() + 10);
+        enemy.SetSightRange(enemy.GetSightRange() + 12);
         activateMarker = false;
     }
 
