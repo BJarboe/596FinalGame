@@ -208,7 +208,7 @@ public class PlayerMovement : MonoBehaviour
     private void Movement()
     {
         // Disable sprinting if the player is not moving or is crouched
-        if(((x == 0 && y == 0) && isSprinting) || crouching)
+        if((rb.velocity.magnitude < 0.5 && isSprinting) || crouching)
         {
             isSprinting = false;
         }
