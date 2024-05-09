@@ -235,4 +235,14 @@ public class EnemyBehavior : MonoBehaviour, IHear
     {
         return sightRange;
     }
+
+    public void SetFastSpeed(float fastSpeed)
+    {
+        this.fastSpeed = fastSpeed;
+    }
+
+    public float GetFastSpeed()
+    {
+        return fastSpeed;
+    }
 }
